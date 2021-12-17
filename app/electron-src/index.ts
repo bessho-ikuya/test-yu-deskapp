@@ -1,15 +1,15 @@
 // Native
 import { join } from 'path'
 import { format } from 'url'
+import fs from 'fs'
 
 // Packages
 import { BrowserWindow, app, ipcMain, IpcMainEvent } from 'electron'
 import isDev from 'electron-is-dev'
 import prepareNext from 'electron-next'
-// import fs from 'fs'
-import Store from 'electron-store'
-
-const store = new Store()
+import {hasStorage, getStorage, setStorage, fetchDatas} from '../renderer/lib/local-storage'
+import {localStorageKey} from '../renderer/constants/local-storage-key'
+import {StorageType} from '../renderer/interfaces/storage'
 
 // Prepare the renderer once the app is ready
 app.on('ready', async () => {
@@ -33,14 +33,8 @@ app.on('ready', async () => {
         slashes: true,
       })
 
-  store.set('aisatsu', 'Helloworld')
-  console.log(store.get('aisatsu'))
-  // alert(store.get('aisatsu'));
-  // if (store.has('aisatsu')) {
-  // }
-
-  // const buff = fs.readFileSync('');
-  // console.log(buff)
+  // アプリ起動時にcsvを読みにいく
+  readCsv()
 
   mainWindow.loadURL(url)
 })
@@ -51,7 +45,36 @@ app.on('window-all-closed', app.quit)
 // listen the channel `message` and resend the received message to the renderer process
 ipcMain.on('message', (event: IpcMainEvent, message: any) => {
   console.log(message)
-  store.set('aisatsu', 'Helloworld')
-  console.log(store.get('aisatsu'))
-  setTimeout(() => event.sender.send('message', store.get('aisatsu')), 500)
+  setTimeout(() => event.sender.send('message', 'hello'), 500)
 })
+
+
+// ローカルストレージから設定値を取得
+ipcMain.on("FetchStorage", (event: IpcMainEvent, paths: string[]) => {
+  const storageData = fetchDatas(paths)
+  event.returnValue = { data: storageData };
+});
+
+// ローカルストレージに設定値を登録
+ipcMain.on("RegisterStorage", (event: IpcMainEvent, data: StorageType[]) => {
+  data?.map((storageData: StorageType) => {
+    setStorage(storageData.path, storageData.value)
+  })
+  event.returnValue = { error: "" };
+});
+
+// ローカルのダイルを読みにいく
+function readCsv() {
+    if (!hasStorage(localStorageKey.CSV_PASS)) {
+        console.log('no csv path set')
+        return;
+    }
+    fs.readFile(getStorage(localStorageKey.CSV_PASS), (error:any, data:any) => {
+        if (error != null) {
+            alert("file open error.");
+            return;
+        }
+        // バックエンドに送信
+        console.log(data.toString())
+    })
+}
