@@ -6,15 +6,15 @@ import { format } from 'url'
 import isDev from 'electron-is-dev'
 
 
-function windowConf(screen:any) {
+const windowConf = (screen:any) => {
     let display = screen.getPrimaryDisplay();
     let width = display.bounds.width;
     let height = display.bounds.height;
     const conf = {
-        width: 500,
-        height: 400,
-        x: width - 500,
-        y: height - 400,
+        width: 750,
+        height: 480,
+        x: width - 750,
+        y: height - 480,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: false,
