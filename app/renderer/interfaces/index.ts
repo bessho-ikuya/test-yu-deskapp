@@ -19,3 +19,8 @@ export type User = {
   id: number
   name: string
 }
+
+export type Error = {
+  code: number
+  errors: string[]
+}

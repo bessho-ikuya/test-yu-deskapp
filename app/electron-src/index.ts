@@ -1,27 +1,37 @@
 // Native
 import { join } from 'path'
 import { format } from 'url'
-import fs from 'fs'
 
 // Packages
-import { BrowserWindow, app, ipcMain, IpcMainEvent } from 'electron'
+import { BrowserWindow, app, ipcMain, IpcMainEvent, screen} from 'electron'
 import isDev from 'electron-is-dev'
 import prepareNext from 'electron-next'
-import {hasStorage, getStorage, setStorage, fetchDatas} from '../renderer/lib/local-storage'
-import {localStorageKey} from '../renderer/constants/local-storage-key'
+
+// services
+import {execCalc} from '../renderer/services/calc-service'
+import {fetchStorageDatas, storeStorageDatas} from '../renderer/services/local-storage-service'
+
+// interfaces
 import {StorageType} from '../renderer/interfaces/storage'
 
 // Prepare the renderer once the app is ready
 app.on('ready', async () => {
   await prepareNext('./renderer')
 
+  let display = screen.getPrimaryDisplay();
+  let width = display.bounds.width;
+  let height = display.bounds.height;
+
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 500,
+    height: 400,
+    x: width - 500,
+    y: height - 400,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: false,
       preload: join(__dirname, 'preload.js'),
+      webSecurity: false
     },
   })
 
@@ -33,8 +43,16 @@ app.on('ready', async () => {
         slashes: true,
       })
 
-  // アプリ起動時にcsvを読みにいく
-  readCsv()
+      
+  // 初回データ計算
+  execCalc()
+    .then(() => {
+      mainWindow.webContents.send("ExecCalcResult", { status: true })
+    })
+    .catch(err => {
+      console.log('err__', err)
+      mainWindow.webContents.send("ExecCalcResult", { status: false })
+    })
 
   mainWindow.loadURL(url)
 })
@@ -42,39 +60,14 @@ app.on('ready', async () => {
 // Quit the app once all windows are closed
 app.on('window-all-closed', app.quit)
 
-// listen the channel `message` and resend the received message to the renderer process
-ipcMain.on('message', (event: IpcMainEvent, message: any) => {
-  console.log(message)
-  setTimeout(() => event.sender.send('message', 'hello'), 500)
-})
-
-
 // ローカルストレージから設定値を取得
 ipcMain.on("FetchStorage", (event: IpcMainEvent, paths: string[]) => {
-  const storageData = fetchDatas(paths)
+  const storageData = fetchStorageDatas(paths)
   event.returnValue = { data: storageData };
 });
 
 // ローカルストレージに設定値を登録
 ipcMain.on("RegisterStorage", (event: IpcMainEvent, data: StorageType[]) => {
-  data?.map((storageData: StorageType) => {
-    setStorage(storageData.path, storageData.value)
-  })
+  storeStorageDatas(data)
   event.returnValue = { error: "" };
 });
-
-// ローカルのダイルを読みにいく
-function readCsv() {
-    if (!hasStorage(localStorageKey.CSV_PASS)) {
-        console.log('no csv path set')
-        return;
-    }
-    fs.readFile(getStorage(localStorageKey.CSV_PASS), (error:any, data:any) => {
-        if (error != null) {
-            alert("file open error.");
-            return;
-        }
-        // バックエンドに送信
-        console.log(data.toString())
-    })
-}
