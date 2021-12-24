@@ -18,10 +18,12 @@ app.on('ready', async () => {
   // 初回データ計算
   execCalc()
     .then(() => {
+      // 成功シグナル送信
       mainWindow.webContents.send("ExecCalcResult", { status: true })
     })
     .catch(err => {
       console.log('err__', err)
+      // 失敗シグナル送信
       mainWindow.webContents.send("ExecCalcResult", { status: false })
     })
 
@@ -41,4 +43,18 @@ ipcMain.on("FetchStorage", (event: IpcMainEvent, paths: string[]) => {
 ipcMain.on("RegisterStorage", (event: IpcMainEvent, data: StorageType[]) => {
   storeStorageDatas(data)
   event.returnValue = { error: "" };
+});
+
+// 再計算
+ipcMain.on("ReExecCalc", (event: IpcMainEvent) => {
+  execCalc()
+    .then(() => {
+      // 成功シグナル送信
+      event.returnValue = { status: true };
+    })
+    .catch(err => {
+      console.log('err__', err)
+      // 失敗シグナル送信
+      event.returnValue = { status: false };
+    })
 });

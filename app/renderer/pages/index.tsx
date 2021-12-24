@@ -4,42 +4,68 @@ import LinkButton from '../components/ui/Button/LinkButton'
 import ActionButton from '../components/ui/Button/ActionButton'
 import CalcResultTable from '../components/ui/Table/CalcResultTable'
 import {CalcResultType} from '../interfaces/index'
+import acceptFirstCalcResult from '../utils/accept-calc-result'
+import calcStateHandler from "../redux/actions/calcStateHandler"
+import {localStorageKey} from '../constants/local-storage-key'
 
 const IndexPage = () => {
-  useEffect(() => {
-    // add a listener to 'message' channel
-    global.ipcRenderer.addListener('message', (_event, args) => {
-      alert(args)
-    })
-  }, [])
-
-  const rows:CalcResultType[] = [
-    {
-      id : 1,
-      name : 'string',
-      weight : 'string',
-      recept1 : 'string',
-      recept2 : 'string'
-    },
-    {
-      id : 2,
-      name : 'string',
-      weight : 'string',
-      recept1 : 'string',
-      recept2 : 'string'
-    }
-  ];
-
-  const [calcResults, setCalcResults] = useState<CalcResultType[]>(rows)
+  const [calcResults, setCalcResults] = useState<CalcResultType[]>();
   const [badActionId, setBadActionId] = useState<number>(0)
   const [goodActionId, setGoodActionId] = useState<number>(0)
 
-  const handleOnClick = () => {
-    alert('re culc')
+  const { loading, hasError, startLoading, endLoading, setError, clearError } = calcStateHandler();
+
+  // 初回計算結果受信
+  useEffect(() => {
+    acceptFirstCalcResult(setError, endLoading)
+  }, [])
+
+  useEffect(() => {
+    if (!loading && !hasError) {
+      console.log('計算完了')
+      // 結果表示データ更新
+      updateDisplayCalcResultData()
+    }
+  }, [loading])
+
+  // 再計算実行
+  async function ReExecCalclationa() {
+    // ローディング
+    console.log('a',loading)
+    startLoading()
+    clearError()
+    console.log('b',loading)
+    let retval = global.ipcRenderer.sendSync("ReExecCalc");
+    if (retval.status == false) {
+      setError()
+      endLoading()
+    } else if (retval.status == true) {
+      endLoading()
+    }
+    // if (retval.status == false) {
+    //   setError()
+    //   endLoading()
+    // } else if (retval.status == true) {
+    //   endLoading()
+    // }
+    updateDisplayCalcResultData()
+    console.log('finish')
   }
 
-  const onSayHiClick = () => {
-    global.ipcRenderer.send('message', 'hi from next')
+  // reduxクリア
+  // function resetState() {
+  //   startLoading()
+  //   clearError()
+  // }
+
+  // 結果表示データ更新
+  function updateDisplayCalcResultData() {
+    let pathes: string[] = [
+      localStorageKey.CALC_RESULTS,
+    ];
+    let retval = global.ipcRenderer.sendSync("FetchStorage", pathes);
+    let results: CalcResultType[] = retval.data[localStorageKey.CALC_RESULTS]
+    setCalcResults(results)
   }
 
   useEffect(() => {
@@ -68,16 +94,28 @@ const IndexPage = () => {
       <div className='h-full flex flex-col justify-between'>
         <div>
           <div className='flex justify-between mb-4'>
-            <ActionButton label="更新" color="black" onClick={handleOnClick}/>
+            <ActionButton key="aaa" label={loading ? "更新中" : "更新"} color="black" onClick={() => {
+              startLoading()
+              clearError()
+              ReExecCalclationa()
+            }}/>
           </div>
           <div className='flex'>
             <div className='w-85 mr-4'></div>
-            <CalcResultTable 
-              headers={headers} 
-              setBadActionId={setBadActionId} 
-              setGoodActionId={setGoodActionId} 
-              calcResults={calcResults} 
-            />
+            {!loading && !hasError && !!calcResults && calcResults.length > 0 ? (
+              <CalcResultTable 
+                headers={headers} 
+                setBadActionId={setBadActionId} 
+                setGoodActionId={setGoodActionId} 
+                calcResults={calcResults} 
+              />
+            ) : (
+              hasError ? (
+                <p className='text-red-400'>更新に失敗しました。</p>
+              ) : (
+                <h1>Loading</h1>
+              )
+            )}
           </div>
         </div>
         <div className='flex justify-between'>

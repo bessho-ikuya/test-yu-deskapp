@@ -1,4 +1,4 @@
-import {hasStorage, getStorage} from '../lib/local-storage'
+import {hasStorage, getStorage, setStorage} from '../lib/local-storage'
 import {readCsv} from '../utils/read-csv'
 import {localStorageKey} from '../constants/local-storage-key'
 import ExportCsv from '../api/action/export-csv'
@@ -14,7 +14,8 @@ async function execCalc() {
     const csvData = await readCsv(getStorage(localStorageKey.CSV_PASS));
     // API接続
     const res = await ExportCsv(csvData);
-    console.log('計算データ__', res);
+    // 計算結果をローカルストレージに保存
+    setStorage(localStorageKey.CALC_RESULTS, res.data)
 }
 
 export {execCalc}

@@ -21,7 +21,7 @@ const CalcResultTable = ({headers, calcResults, setBadActionId, setGoodActionId}
                     <th key={key + `__head`} className="bg-gray-100 border px-2 py-2 text-base">{header}</th>
                 ))}
             </tr>
-            {calcResults.map((calcResult: CalcResultType, iskey:number)=> (
+            {calcResults?.map((calcResult: CalcResultType, iskey:number)=> (
                 <tr key={iskey + `__row`}>
                     <td className="border text-left px-2 py-2 text-sm">{calcResult.id}</td>
                     <td className="border text-left px-2 py-2 text-sm">{calcResult.name}</td>
