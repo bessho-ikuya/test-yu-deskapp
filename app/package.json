@@ -1,9 +1,9 @@
 {
   "private": true,
-  "main": "main/electron-src/index.js",
+  "main": "main/index.js",
   "productName": "yuyama-front-app",
-  "version": "0.0.2",
-  "name": "0.0.2",
+  "version": "0.0.3",
+  "name": "0.0.3",
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
     "dev": "npm run build-electron && electron .",

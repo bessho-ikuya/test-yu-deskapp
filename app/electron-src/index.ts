@@ -4,11 +4,11 @@ import prepareNext from 'electron-next'
 import {windowConf, appUrl} from './window-setting'
 
 // services
-import {execCalc} from '../renderer/services/calc-service'
-import {fetchStorageDatas, storeStorageDatas} from '../renderer/services/local-storage-service'
+import {execCalc} from './services/calc-service'
+import {fetchStorageDatas, storeStorageDatas} from './services/local-storage-service'
 
 // interfaces
-import {StorageType} from '../renderer/interfaces/storage'
+import {StorageType} from './interfaces/storage'
 
 // Prepare the renderer once the app is ready
 app.on('ready', async () => {
