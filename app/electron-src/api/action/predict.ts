@@ -3,6 +3,7 @@ import connection from '../connection';
 
 async function predict(request: any) {
     const res:any = await connection().post('predict', request);
+    console.log(res)
     return res;
 }
 
