@@ -103,7 +103,7 @@ const IndexPage = () => {
       <div className='h-full flex flex-col justify-between'>
         <div>
           <div className='flex justify-between mb-4'>
-            <ActionButton key="aaa" label={loading ? "更新中" : "更新"} color="black" onClick={() => {
+            <ActionButton key="aaa" label={loading ? "更新中..." : "更新"} color="black" onClick={() => {
               startLoading()
               clearError()
               setReCalc(1)
@@ -124,7 +124,7 @@ const IndexPage = () => {
               hasError ? (
                 <p className='text-red-400'>更新に失敗しました。</p>
               ) : (
-                <h1>Loading</h1>
+                <h1>Loading...</h1>
               )
             )}
           </div>
