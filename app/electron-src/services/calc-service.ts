@@ -14,14 +14,14 @@ async function execCalc() {
     const csvData = await readCsv(getStorage(localStorageKey.CSV_PASS));
     // API接続
     const request: any = {
-        csv_contents: csvData,
+        csv: csvData,
         engine: 'private_all',
         filtering: [],
     }
     console.log('request', request)
     const res = await predict(request);
     // 計算結果をローカルストレージに保存
-    console.log(res.data.detail)
+    console.log(res.data)
     setStorage(localStorageKey.CALC_RESULTS, res.data)
 }
 
