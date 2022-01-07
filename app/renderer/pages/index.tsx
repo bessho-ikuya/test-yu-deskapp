@@ -12,6 +12,7 @@ const IndexPage = () => {
   const [calcResults, setCalcResults] = useState<CalcResultType[]>();
   const [badActionId, setBadActionId] = useState<number>(0)
   const [goodActionId, setGoodActionId] = useState<number>(0)
+  const [reCalc, setReCalc] = useState<number>(0)
 
   const { loading, hasError, startLoading, endLoading, setError, clearError } = calcStateHandler();
 
@@ -20,6 +21,20 @@ const IndexPage = () => {
     acceptFirstCalcResult(setError, endLoading)
   }, [])
 
+  // 再計算
+  useEffect(() => {
+    if (reCalc) {
+      let retval = global.ipcRenderer.sendSync("ReExecCalc");
+      if (retval.status == false) {
+        setError()
+        endLoading()
+      } else {
+        endLoading()
+      }
+      setReCalc(0)
+    }
+  }, [reCalc])
+
   useEffect(() => {
     if (!loading && !hasError) {
       console.log('計算完了')
@@ -27,30 +42,6 @@ const IndexPage = () => {
       updateDisplayCalcResultData()
     }
   }, [loading])
-
-  // 再計算実行
-  async function ReExecCalclationa() {
-    // ローディング
-    console.log('a',loading)
-    startLoading()
-    clearError()
-    console.log('b',loading)
-    let retval = global.ipcRenderer.sendSync("ReExecCalc");
-    if (retval.status == false) {
-      setError()
-      endLoading()
-    } else if (retval.status == true) {
-      endLoading()
-    }
-    // if (retval.status == false) {
-    //   setError()
-    //   endLoading()
-    // } else if (retval.status == true) {
-    //   endLoading()
-    // }
-    updateDisplayCalcResultData()
-    console.log('finish')
-  }
 
   // reduxクリア
   // function resetState() {
@@ -97,7 +88,7 @@ const IndexPage = () => {
             <ActionButton key="aaa" label={loading ? "更新中" : "更新"} color="black" onClick={() => {
               startLoading()
               clearError()
-              ReExecCalclationa()
+              setReCalc(1)
             }}/>
           </div>
           <div className='flex'>
