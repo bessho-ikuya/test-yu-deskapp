@@ -14,7 +14,7 @@ async function execCalc() {
     const csvData = await readCsv(getStorage(localStorageKey.CSV_PASS));
     // API接続
     const request: any = {
-        csv: csvData,
+        csv_contents: csvData,
         engine: 'private_all',
         filtering: [],
     }
