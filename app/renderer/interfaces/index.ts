@@ -21,9 +21,9 @@ export type User = {
 }
 
 export type CalcResultType = {
-  id : number,
-  name : string,
-  weight : string,
+  receipt_code : string,
+  distance : string,
+  user : string[],
   recept1 : string,
   recept2 : string
 }

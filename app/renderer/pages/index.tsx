@@ -10,8 +10,10 @@ import {localStorageKey} from '../constants/local-storage-key'
 
 const IndexPage = () => {
   const [calcResults, setCalcResults] = useState<CalcResultType[]>();
-  const [badActionId, setBadActionId] = useState<number>(0)
-  const [goodActionId, setGoodActionId] = useState<number>(0)
+  const [badActionId, setBadActionId] = useState<string>("")
+  const [goodActionId, setGoodActionId] = useState<string>("")
+  const [badActionUser, setBadActionUser] = useState<string[]>([])
+  const [goodActionUser, setGoodActionUser] = useState<string[]>([])
   const [reCalc, setReCalc] = useState<number>(0)
 
   const { loading, hasError, startLoading, endLoading, setError, clearError } = calcStateHandler();
@@ -60,14 +62,16 @@ const IndexPage = () => {
   }
 
   useEffect(() => {
-    if (badActionId !== 0) {
+    if (badActionId !== "") {
       console.log('bad', badActionId)
+      console.log('bad_user', badActionUser)
     }
   }, [badActionId]);
 
   useEffect(() => {
-    if (goodActionId !== 0) {
+    if (goodActionId !== "") {
       console.log('good', goodActionId)
+      console.log('good_user', goodActionUser)
     }
   }, [goodActionId]);
 
@@ -97,7 +101,9 @@ const IndexPage = () => {
               <CalcResultTable 
                 headers={headers} 
                 setBadActionId={setBadActionId} 
+                setBadActionUser={setBadActionUser} 
                 setGoodActionId={setGoodActionId} 
+                setGoodActionUser={setGoodActionUser} 
                 calcResults={calcResults} 
               />
             ) : (

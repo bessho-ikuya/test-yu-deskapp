@@ -18,11 +18,10 @@ async function execCalc() {
         engine: 'private_all',
         filtering: [],
     }
-    console.log('request', request)
     const res = await predict(request);
     // 計算結果をローカルストレージに保存
-    console.log(res)
-    setStorage(localStorageKey.CALC_RESULTS, res.data)
+    console.log(res.data.result)
+    setStorage(localStorageKey.CALC_RESULTS, res.data.result)
 }
 
 export {execCalc}

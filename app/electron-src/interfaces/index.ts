@@ -20,14 +20,6 @@ export type User = {
   name: string
 }
 
-export type CalcResultType = {
-  id : number,
-  name : string,
-  weight : string,
-  recept1 : string,
-  recept2 : string
-}
-
 export type Error = {
   code: number
   errors: string[]
