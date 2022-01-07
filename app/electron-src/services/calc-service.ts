@@ -18,6 +18,7 @@ async function execCalc() {
         engine: 'private_all',
         filtering: [],
     }
+    console.log('request', request)
     const res = await predict(request);
     // 計算結果をローカルストレージに保存
     console.log(res.data)
