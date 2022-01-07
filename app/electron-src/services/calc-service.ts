@@ -21,7 +21,7 @@ async function execCalc() {
     console.log('request', request)
     const res = await predict(request);
     // 計算結果をローカルストレージに保存
-    console.log(res)
+    console.log(res.data.detail)
     setStorage(localStorageKey.CALC_RESULTS, res.data)
 }
 
