@@ -1,10 +1,14 @@
 import axios from 'axios';
+import https from 'https';
+import {getStorage} from '../lib/local-storage'
+import {localStorageKey} from '../constants/local-storage-key'
 
 const apiconnect = ({} = {}) => {
-  const baseURL = 'http://localhost:8080'
+  const baseURL = 'http://' + getStorage(localStorageKey.API_IP) + ':8000'
   const instance = axios.create({
     baseURL: baseURL,
-    timeout: 500000,
+    timeout: 6000000, //optional
+    httpsAgent: new https.Agent({ keepAlive: true }),
     headers: {
       'Content-Type': 'application/json',
     }
