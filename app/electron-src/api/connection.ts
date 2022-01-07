@@ -1,5 +1,4 @@
 import axios from 'axios';
-import https from 'https';
 import {getStorage} from '../lib/local-storage'
 import {localStorageKey} from '../constants/local-storage-key'
 
@@ -8,7 +7,6 @@ const apiconnect = ({} = {}) => {
   const instance = axios.create({
     baseURL: baseURL,
     timeout: 6000000, //optional
-    httpsAgent: new https.Agent({ keepAlive: true }),
     headers: {
       'Content-Type': 'application/json',
     }
