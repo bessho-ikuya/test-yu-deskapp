@@ -6,7 +6,7 @@ async function predict(request: any) {
     // const res:any = await mock(request, false);
     // return res;
     const res:any = await connection().post('predict', request);
-    return res.data;
+    return res;
 }
 
 export default predict
