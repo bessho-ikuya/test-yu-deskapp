@@ -5,7 +5,7 @@ import {windowConf, appUrl} from './window-setting'
 
 // services
 import {execCalc} from './services/calc-service'
-import {fetchStorageDatas, storeStorageDatas} from './services/local-storage-service'
+import {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas} from './services/local-storage-service'
 
 // interfaces
 import {StorageType} from './interfaces/storage'
@@ -14,7 +14,10 @@ import {StorageType} from './interfaces/storage'
 app.on('ready', async () => {
   await prepareNext('./renderer')
   const mainWindow = new BrowserWindow(windowConf(screen))
-      
+
+  // デフォルト値セット  
+  setDefaultStorageDatas()
+
   // 初回データ計算
   execCalc()
     .then(() => {
