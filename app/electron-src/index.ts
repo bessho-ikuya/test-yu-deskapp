@@ -5,6 +5,7 @@ import {windowConf, appUrl} from './window-setting'
 
 // services
 import {execCalc} from './services/calc-service'
+import {sendGoodEvaluation, sendBadEvaluation} from './services/evaluation'
 import {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas} from './services/local-storage-service'
 
 // interfaces
@@ -51,6 +52,37 @@ ipcMain.on("RegisterStorage", (event: IpcMainEvent, data: StorageType[]) => {
 // 再計算
 ipcMain.on("ReExecCalc", (event: IpcMainEvent) => {
   execCalc()
+    .then(() => {
+      // 成功シグナル送信
+      event.returnValue = { status: true };
+    })
+    .catch(err => {
+      console.log('err__', err)
+      // 失敗シグナル送信
+      event.returnValue = { status: false };
+    })
+});
+
+// Good評価
+ipcMain.on("sendGoodEvaluation", (event: IpcMainEvent, request: any) => {
+  console.log('sendGoodEvaluation', request)
+  sendGoodEvaluation(request)
+    .then(() => {
+      // 成功シグナル送信
+      event.returnValue = { status: true };
+    })
+    .catch(err => {
+      console.log('err__', err)
+      // 失敗シグナル送信
+      event.returnValue = { status: false };
+    })
+});
+
+// Bad評価
+ipcMain.on("sendBadEvaluation", (event: IpcMainEvent, request: any) => {
+  console.log('sendBadEvaluation', request)
+
+  sendBadEvaluation(request)
     .then(() => {
       // 成功シグナル送信
       event.returnValue = { status: true };

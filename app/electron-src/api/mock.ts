@@ -6,22 +6,24 @@ async function mock(requestData: any, error: boolean) {
         throw new Error('error');
     }
     const res = {
-        data: [
-            {
-                id : 1,
-                name : '変更テスト',
-                weight : 'string',
-                recept1 : 'string',
-                recept2 : 'string'
-            },
-            {
-                id : 2,
-                name : 'string',
-                weight : '変更テスト',
-                recept1 : 'string',
-                recept2 : 'string'
-            }
-        ]
+        data: {
+            result: [
+                {
+                    receipt_code : "傷病",
+                    distance : '0.123',
+                    user : ['string'],
+                    recept1 : 'string',
+                    recept2 : 'string'
+                },
+                {
+                    receipt_code : "傷病aa",
+                    distance : '0.123',
+                    user : ['string'],
+                    recept1 : 'string',
+                    recept2 : 'string'
+                },
+            ]
+        }
     };
     return res;
 }

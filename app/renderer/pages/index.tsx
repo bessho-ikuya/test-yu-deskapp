@@ -63,6 +63,13 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (badActionId !== "") {
+      let request: any = {
+        engine: 'predict_all',
+        receipt_code: badActionId,
+        user: badActionUser
+      }
+      let retval = global.ipcRenderer.sendSync("sendBadEvaluation", request);
+      console.log('retval__', retval)
       console.log('bad', badActionId)
       console.log('bad_user', badActionUser)
     }
@@ -70,6 +77,13 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (goodActionId !== "") {
+      let request: any = {
+        engine: 'predict_all',
+        receipt_code: goodActionId,
+        user: goodActionUser
+      }
+      let retval = global.ipcRenderer.sendSync("sendGoodEvaluation", request);
+      console.log('retval__', retval)
       console.log('good', goodActionId)
       console.log('good_user', goodActionUser)
     }

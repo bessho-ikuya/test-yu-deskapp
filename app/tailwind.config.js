@@ -18,6 +18,9 @@ module.exports = {
         'off-white': '#F2F2E9',
         'dark-blue': '#333311'
       },
+      maxHeight: {
+        'cus': '330px'
+      },
     },
   },
   variants: {
