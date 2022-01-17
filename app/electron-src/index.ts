@@ -4,7 +4,7 @@ import prepareNext from 'electron-next'
 import {windowConf, appUrl} from './window-setting'
 
 // services
-import {execCalc} from './services/calc-service'
+import {execCalc, moveCsvFileToTmp} from './services/calc-service'
 import {sendGoodEvaluation, sendBadEvaluation} from './services/evaluation'
 import {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas} from './services/local-storage-service'
 
@@ -35,7 +35,17 @@ app.on('ready', async () => {
 })
 
 // Quit the app once all windows are closed
-app.on('window-all-closed', app.quit)
+app.on('window-all-closed', () => {
+  // csvを一時保存し、元データは削除
+  moveCsvFileToTmp()
+    .then(_ => {
+      app.quit()
+    })
+    .catch(err => {
+      console.log('err__', err)
+      app.quit()
+    })
+})
 
 // ローカルストレージから設定値を取得
 ipcMain.on("FetchStorage", (event: IpcMainEvent, paths: string[]) => {

@@ -37,6 +37,10 @@ function storeStorageDatas(data: StorageType[]): any {
             value: defaultLocalStorageValue.CSV_PASS,
         },
         {
+            path: localStorageKey.CSV_TMP_PASS,
+            value: defaultLocalStorageValue.CSV_TMP_PASS,
+        },
+        {
             path: localStorageKey.API_IP,
             value: defaultLocalStorageValue.API_IP,
         }

@@ -6,16 +6,19 @@ type SettingFormProps = {};
 
 const SettingForm = (props: SettingFormProps) => {
   const [csvPath, setCsvPath] = useState<string>('');
+  const [csvTmpPath, setCsvTmpPath] = useState<string>('');
   const [apiIp, setApiIp] = useState<string>('');
 
   // ローカルストレージから設定値取得
   useEffect(() => {
     let pathes: string[] = [
         localStorageKey.CSV_PASS,
+        localStorageKey.CSV_TMP_PASS,
         localStorageKey.API_IP,
     ];
     var retval = global.ipcRenderer.sendSync("FetchStorage", pathes);
     setCsvPath(retval.data[localStorageKey.CSV_PASS])
+    setCsvTmpPath(retval.data[localStorageKey.CSV_TMP_PASS])
     setApiIp(retval.data[localStorageKey.API_IP])
   }, []);
 
@@ -25,6 +28,10 @@ const SettingForm = (props: SettingFormProps) => {
         {
             path: localStorageKey.CSV_PASS,
             value: csvPath
+        },
+        {
+          path: localStorageKey.CSV_TMP_PASS,
+          value: csvTmpPath
         },
         {
           path: localStorageKey.API_IP,
@@ -42,6 +49,12 @@ const SettingForm = (props: SettingFormProps) => {
             type='text'
             value={csvPath}
             onChange={(e) => setCsvPath(e.target.value)}
+        />
+        <p>csv-tmpパス</p>
+        <input
+            type='text'
+            value={csvTmpPath}
+            onChange={(e) => setCsvTmpPath(e.target.value)}
         />
         <p>API-IP</p>
         <input
