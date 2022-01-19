@@ -15,7 +15,7 @@ const IndexPage = () => {
   const [badActionUser, setBadActionUser] = useState<string[]>([])
   const [goodActionUser, setGoodActionUser] = useState<string[]>([])
   const [reCalc, setReCalc] = useState<number>(0)
-
+  const [botMessage, setBotMessage] = useState<string>("以下のオーダーをお忘れではないでしょうか？確認中のレセプトとオーダー内容が類似したレセプトを紹介します。")
   const { loading, hasError, startLoading, endLoading, setError, clearError } = calcStateHandler();
 
   // 初回計算結果受信
@@ -30,16 +30,16 @@ const IndexPage = () => {
       if (retval.status == false) {
         setError()
         endLoading()
+        setReCalc(0)
       } else {
         endLoading()
+        setReCalc(0)
       }
-      setReCalc(0)
     }
   }, [reCalc])
 
   useEffect(() => {
     if (!loading && !hasError) {
-      console.log('計算完了')
       // 結果表示データ更新
       updateDisplayCalcResultData()
     }
@@ -68,10 +68,7 @@ const IndexPage = () => {
         receipt_code: badActionId,
         user: badActionUser
       }
-      let retval = global.ipcRenderer.sendSync("sendBadEvaluation", request);
-      console.log('retval__', retval)
-      console.log('bad', badActionId)
-      console.log('bad_user', badActionUser)
+      global.ipcRenderer.sendSync("sendBadEvaluation", request);
     }
   }, [badActionId]);
 
@@ -82,10 +79,7 @@ const IndexPage = () => {
         receipt_code: goodActionId,
         user: goodActionUser
       }
-      let retval = global.ipcRenderer.sendSync("sendGoodEvaluation", request);
-      console.log('retval__', retval)
-      console.log('good', goodActionId)
-      console.log('good_user', goodActionUser)
+      global.ipcRenderer.sendSync("sendGoodEvaluation", request);
     }
   }, [goodActionId]);
 
@@ -93,46 +87,42 @@ const IndexPage = () => {
     '順位',
     '推薦項目名',
     '確度',
-    '類似レセプト1',
-    '類似レセプト2',
     'アクション',
   ];
 
   return (
-    <Layout title="SYSTEM">
-      <div className='h-full flex flex-col justify-between'>
-        <div>
-          <div className='flex justify-between mb-4'>
-            <ActionButton key="aaa" label={loading ? "更新中..." : "更新"} color="black" onClick={() => {
-              startLoading()
-              clearError()
-              setReCalc(1)
-            }}/>
-          </div>
-          <div className='flex'>
-            <div className='w-85 mr-4'></div>
-            {!loading && !hasError && !!calcResults && calcResults.length > 0 ? (
-              <CalcResultTable 
-                headers={headers} 
-                setBadActionId={setBadActionId} 
-                setBadActionUser={setBadActionUser} 
-                setGoodActionId={setGoodActionId} 
-                setGoodActionUser={setGoodActionUser} 
-                calcResults={calcResults} 
-              />
+    <Layout title="BrainBoxAICheck" message={botMessage}>
+      <div>
+        <div className='flex justify-end mb-2'>
+          <ActionButton key="loadbtn" disabled={loading ? true : false} label={loading ? "更新中..." : "更新"} color="black" onClick={() => {
+            startLoading()
+            clearError()
+            setReCalc(1)
+          }}/>
+        </div>
+        <div className='flex'>
+          <div className='w-85 mr-4'></div>
+          {!loading && !hasError && !!calcResults && calcResults.length > 0 ? (
+            <CalcResultTable 
+              headers={headers} 
+              setBadActionId={setBadActionId} 
+              setBadActionUser={setBadActionUser} 
+              setGoodActionId={setGoodActionId} 
+              setGoodActionUser={setGoodActionUser} 
+              calcResults={calcResults} 
+            />
+          ) : (
+            hasError ? (
+              <p className='text-red-400'>更新に失敗しました。</p>
             ) : (
-              hasError ? (
-                <p className='text-red-400'>更新に失敗しました。</p>
-              ) : (
-                <h1>Loading...</h1>
-              )
-            )}
-          </div>
+              <h1>Loading...</h1>
+            )
+          )}
         </div>
-        <div className='flex justify-between'>
-          <LinkButton label="設定" color="black" href="/setting" />
-          <LinkButton label="閉じる" color="black" href="/setting" />
-        </div>
+      </div>
+      <div className='flex justify-between'>
+        <LinkButton label="設定" color="black" href="/setting" />
+        <LinkButton label="閉じる" color="black" href="/setting" />
       </div>
     </Layout>
   )

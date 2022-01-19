@@ -19,7 +19,7 @@ module.exports = {
         'dark-blue': '#333311'
       },
       maxHeight: {
-        'cus': '330px'
+        'cus': '380px'
       },
     },
   },

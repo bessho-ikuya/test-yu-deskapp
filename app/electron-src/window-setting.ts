@@ -11,8 +11,8 @@ const windowConf = (screen:any) => {
     let width = display.bounds.width;
     let height = display.bounds.height;
     const conf = {
-        width: 750,
-        height: 480,
+        width: 1000,
+        height: 560,
         x: width - 750,
         y: height - 480,
         webPreferences: {

@@ -1,5 +1,5 @@
 import {hasStorage, getStorage, setStorage} from '../lib/local-storage'
-import {fetchDirCsv, readCsv, writeCsv, unlinkCsv} from '../utils/csv-handler'
+import {fetchDirCsv, readCsv, writeCsv} from '../utils/csv-handler'
 import {localStorageKey} from '../constants/local-storage-key'
 import predict from '../api/action/predict'
 
@@ -45,7 +45,7 @@ async function execCalc() {
     // 一時保存
     await writeCsv(getStorage(localStorageKey.CSV_TMP_PASS)+"/"+targetFileName, csvData)
     // 既存ファイル削除
-    await unlinkCsv(getStorage(localStorageKey.CSV_PASS)+"/"+targetFileName)
+    // await unlinkCsv(getStorage(localStorageKey.CSV_PASS)+"/"+targetFileName)
  }
 
 export {execCalc, moveCsvFileToTmp}

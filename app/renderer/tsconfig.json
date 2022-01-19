@@ -23,6 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.png",
     "pages/_app.js"
   ],
   "exclude": [

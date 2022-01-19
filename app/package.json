@@ -1,9 +1,9 @@
 {
   "private": true,
   "main": "main/index.js",
-  "productName": "yuyama-front-app",
-  "version": "0.0.4",
-  "name": "0.0.4",
+  "productName": "BrainBoxAICheck",
+  "version": "0.0.5",
+  "name": "0.0.5",
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
     "dev": "npm run build-electron && electron .",
@@ -46,6 +46,16 @@
     "files": [
       "main",
       "renderer/out"
-    ]
+    ],
+    "mac": {
+      "icon": "./icon.png",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "icon": "./icon.png",
+      "target": "msi"
+    }
   }
 }
