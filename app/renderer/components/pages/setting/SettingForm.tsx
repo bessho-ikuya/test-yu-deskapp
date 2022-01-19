@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import {localStorageKey} from '../../../constants/local-storage-key'
 import {StorageType} from '../../../interfaces/storage'
 import TextInput from '../../ui/Form/TextInput'
@@ -15,7 +15,7 @@ const SettingForm = (props: SettingFormProps) => {
   const [apiIp, setApiIp] = useState<string>('');
 
   // ローカルストレージから設定値取得
-  useMemo(() => {
+  useEffect(() => {
     let pathes: string[] = [
         localStorageKey.CSV_PASS,
         localStorageKey.CSV_TMP_PASS,
