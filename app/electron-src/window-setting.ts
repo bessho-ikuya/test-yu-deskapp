@@ -13,8 +13,8 @@ const windowConf = (screen:any) => {
     const conf = {
         width: 1000,
         height: 560,
-        x: width - 750,
-        y: height - 480,
+        x: width - 1000,
+        y: height - 560,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: false,

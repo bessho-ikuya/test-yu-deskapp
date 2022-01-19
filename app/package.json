@@ -55,7 +55,11 @@
     },
     "win": {
       "icon": "./icon.png",
-      "target": "msi"
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     }
   }
 }
