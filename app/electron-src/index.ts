@@ -59,6 +59,19 @@ ipcMain.on("RegisterStorage", (event: IpcMainEvent, data: StorageType[]) => {
   event.returnValue = { error: "" };
 });
 
+// アプリ終了
+ipcMain.on("CloseApp", () => {
+  // csvを一時保存し、元データは削除
+  moveCsvFileToTmp()
+    .then(_ => {
+      app.quit()
+    })
+    .catch(err => {
+      console.log('err__', err)
+      app.quit()
+    })
+});
+
 // 再計算
 ipcMain.on("ReExecCalc", (event: IpcMainEvent) => {
   execCalc()

@@ -7,6 +7,7 @@ import {CalcResultType} from '../interfaces/index'
 import acceptFirstCalcResult from '../utils/accept-calc-result'
 import calcStateHandler from "../redux/actions/calcStateHandler"
 import {localStorageKey} from '../constants/local-storage-key'
+import CloseButton from '../components/ui/Button/CloseButton'
 
 const IndexPage = () => {
   const [calcResults, setCalcResults] = useState<CalcResultType[]>();
@@ -94,7 +95,7 @@ const IndexPage = () => {
     <Layout title="BrainBoxAICheck" message={botMessage}>
       <div>
         <div className='flex justify-end mb-2'>
-          <ActionButton key="loadbtn" disabled={loading ? true : false} label={loading ? "更新中..." : "更新"} color="black" onClick={() => {
+          <ActionButton key="loadbtn" disabled={loading ? true : false} label={loading ? "更新中..." : "更新"} onClick={() => {
             startLoading()
             clearError()
             setReCalc(1)
@@ -121,8 +122,8 @@ const IndexPage = () => {
         </div>
       </div>
       <div className='flex justify-between'>
-        <LinkButton label="設定" color="black" href="/setting" />
-        <LinkButton label="閉じる" color="black" href="/setting" />
+        <LinkButton label="設定" href="/setting" />
+        <CloseButton label="閉じる" />
       </div>
     </Layout>
   )

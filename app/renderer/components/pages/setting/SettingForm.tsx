@@ -1,8 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import {localStorageKey} from '../../../constants/local-storage-key'
 import {StorageType} from '../../../interfaces/storage'
+import TextInput from '../../ui/Form/TextInput'
+import SettingFormUI from '../../ui/Form/SettingFormUI'
 
-type SettingFormProps = {};
+type SettingFormProps = {
+  registering : boolean,
+  setRegistering : any
+};
 
 const SettingForm = (props: SettingFormProps) => {
   const [csvPath, setCsvPath] = useState<string>('');
@@ -10,7 +15,7 @@ const SettingForm = (props: SettingFormProps) => {
   const [apiIp, setApiIp] = useState<string>('');
 
   // ローカルストレージから設定値取得
-  useEffect(() => {
+  useMemo(() => {
     let pathes: string[] = [
         localStorageKey.CSV_PASS,
         localStorageKey.CSV_TMP_PASS,
@@ -21,6 +26,14 @@ const SettingForm = (props: SettingFormProps) => {
     setCsvTmpPath(retval.data[localStorageKey.CSV_TMP_PASS])
     setApiIp(retval.data[localStorageKey.API_IP])
   }, []);
+
+  // ローカルストレージから設定値取得
+  useEffect(() => {
+    if (props.registering) {
+      handleSettingRegister()
+      props.setRegistering(false)
+    }
+  }, [props.registering]);
 
   // ローカルストレージに値登録
   async function handleSettingRegister() {
@@ -43,34 +56,33 @@ const SettingForm = (props: SettingFormProps) => {
   }
 
   return (
-    <div>
-        <p>csvパス</p>
-        <input
-            type='text'
-            value={csvPath}
-            onChange={(e) => setCsvPath(e.target.value)}
-        />
-        <p>csv-tmpパス</p>
-        <input
-            type='text'
-            value={csvTmpPath}
-            onChange={(e) => setCsvTmpPath(e.target.value)}
-        />
-        <p>API-IP</p>
-        <input
-            type='text'
-            value={apiIp}
-            onChange={(e) => setApiIp(e.target.value)}
-        />
-        <button
-            type='button'
-            onClick={(e) => {
-            e.preventDefault();
-                handleSettingRegister();
-            }}
-        >
-            登録
-        </button>
+    <div className='w-full max-h-cus bg-white overflow-auto p-y-3 mb-2'>
+      {/* <div className='w-full h-full p-y-3 mb-2'> */}
+        <SettingFormUI label='絞り込み'><p>絞り込み</p></SettingFormUI>
+        <SettingFormUI label='AIエンジン'><p>AIエンジン</p></SettingFormUI>
+        <SettingFormUI label='アイコン設定'><p>アイコン設定</p></SettingFormUI>
+        <SettingFormUI label='テーマ設定'><p>テーマ設定</p></SettingFormUI>
+        <SettingFormUI label='システム設定'>
+          <div className='mb-1'>
+            <label className="block text-black-400 text-sm mb-1">
+            csvパス
+            </label>
+            <TextInput value={csvPath} onChange={(e) => setCsvPath(e.target.value)} />
+          </div>
+          <div className='mb-1'>
+            <label className="block text-black-400 text-sm mb-1">
+            一時保存ファイルパス
+            </label>
+            <TextInput value={csvTmpPath} onChange={(e) => setCsvTmpPath(e.target.value)} />
+          </div>
+          <div className='mb-1'>
+            <label className="block text-black-400 text-sm mb-1">
+            API-IP
+            </label>
+            <TextInput value={apiIp} onChange={(e) => setApiIp(e.target.value)} />
+          </div>
+        </SettingFormUI>
+      {/* </div> */}
     </div>
   );
 }
