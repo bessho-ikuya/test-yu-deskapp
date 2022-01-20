@@ -7,6 +7,7 @@ import {CalcResultType} from '../interfaces/index'
 import acceptFirstCalcResult from '../utils/accept-calc-result'
 import calcStateHandler from "../redux/actions/calcStateHandler"
 import {localStorageKey} from '../constants/local-storage-key'
+import {botMessageTemplate} from '../constants/bot-message'
 import CloseButton from '../components/ui/Button/CloseButton'
 
 const IndexPage = () => {
@@ -16,7 +17,7 @@ const IndexPage = () => {
   const [badActionUser, setBadActionUser] = useState<string[]>([])
   const [goodActionUser, setGoodActionUser] = useState<string[]>([])
   const [reCalc, setReCalc] = useState<number>(0)
-  const [botMessage, setBotMessage] = useState<string>("以下のオーダーをお忘れではないでしょうか？確認中のレセプトとオーダー内容が類似したレセプトを紹介します。")
+  const [botMessage, setBotMessage] = useState<string>(botMessageTemplate['index.default'])
   const { loading, hasError, startLoading, endLoading, setError, clearError } = calcStateHandler();
 
   // 初回計算結果受信
@@ -46,12 +47,6 @@ const IndexPage = () => {
     }
   }, [loading])
 
-  // reduxクリア
-  // function resetState() {
-  //   startLoading()
-  //   clearError()
-  // }
-
   // 結果表示データ更新
   function updateDisplayCalcResultData() {
     let pathes: string[] = [
@@ -62,6 +57,7 @@ const IndexPage = () => {
     setCalcResults(results)
   }
 
+  // バッド評価
   useEffect(() => {
     if (badActionId !== "") {
       let request: any = {
@@ -70,9 +66,11 @@ const IndexPage = () => {
         user: badActionUser
       }
       global.ipcRenderer.sendSync("sendBadEvaluation", request);
+      setBotMessage(botMessageTemplate['index.eval'])
     }
   }, [badActionId]);
 
+  // グッド評価
   useEffect(() => {
     if (goodActionId !== "") {
       let request: any = {
@@ -81,6 +79,7 @@ const IndexPage = () => {
         user: goodActionUser
       }
       global.ipcRenderer.sendSync("sendGoodEvaluation", request);
+      setBotMessage(botMessageTemplate['index.eval'])
     }
   }, [goodActionId]);
 

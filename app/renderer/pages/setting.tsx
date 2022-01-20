@@ -22,7 +22,7 @@ const SettingPage = () => {
   }
 
   return (
-    <Layout title="Setting" message="設定を変更できます。">
+    <Layout title="BrainBoxAICheck|設定" message="設定を変更できます。">
       <div>
         <div className='flex'>
           <div className='w-85 mr-4'></div>

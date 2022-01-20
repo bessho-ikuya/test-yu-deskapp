@@ -15,6 +15,7 @@ import {StorageType} from './interfaces/storage'
 app.on('ready', async () => {
   await prepareNext('./renderer')
   const mainWindow = new BrowserWindow(windowConf(screen))
+  mainWindow.setMenuBarVisibility(false);
 
   // デフォルト値セット  
   setDefaultStorageDatas()
