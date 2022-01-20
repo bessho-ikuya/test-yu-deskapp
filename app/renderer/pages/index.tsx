@@ -55,6 +55,7 @@ const IndexPage = () => {
     let retval = global.ipcRenderer.sendSync("FetchStorage", pathes);
     let results: CalcResultType[] = retval.data[localStorageKey.CALC_RESULTS]
     setCalcResults(results)
+    setBotMessage(botMessageTemplate['index.default'])
   }
 
   // バッド評価

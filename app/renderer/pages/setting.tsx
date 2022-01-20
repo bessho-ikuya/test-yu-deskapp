@@ -7,10 +7,12 @@ import calcStateHandler from "../redux/actions/calcStateHandler"
 import LinkButton from '../components/ui/Button/LinkButton'
 import ActionButton from '../components/ui/Button/ActionButton'
 import CloseButton from '../components/ui/Button/CloseButton'
+import {botMessageTemplate} from '../constants/bot-message'
 
 const SettingPage = () => {
   const { endLoading, setError } = calcStateHandler();
   const [registering, setRegistering] = useState<boolean>(false);
+  const [botMessage, setBotMessage] = useState<string>(botMessageTemplate['setting.default'])
 
   // 計算結果受信
   useEffect(() => {
@@ -22,11 +24,11 @@ const SettingPage = () => {
   }
 
   return (
-    <Layout title="BrainBoxAICheck|設定" message="設定を変更できます。">
+    <Layout title="BrainBoxAICheck|設定" message={botMessage}>
       <div>
         <div className='flex'>
           <div className='w-85 mr-4'></div>
-          <SettingForm registering={registering} setRegistering={setRegistering} />
+          <SettingForm registering={registering} setRegistering={setRegistering} setBotMessage={setBotMessage}/>
         </div>
         <div className='flex justify-between'>
           <LinkButton label="戻る" href="/" />

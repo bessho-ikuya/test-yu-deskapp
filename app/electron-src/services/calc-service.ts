@@ -7,10 +7,10 @@ import predict from '../api/action/predict'
  * 計算実行
  */
 async function execCalc() {
-    if (!hasStorage(localStorageKey.CSV_PASS)) {
-        throw new Error('no csv path set');
-    }
     try {
+        if (!hasStorage(localStorageKey.CSV_PASS)) {
+            throw new Error('no csv path set');
+        }
         // ローカルのcsvを読む
         const fileNames = await fetchDirCsv(getStorage(localStorageKey.CSV_PASS));
         const targetFileName = fileNames[0]
@@ -26,6 +26,7 @@ async function execCalc() {
         // 計算結果をローカルストレージに保存
         setStorage(localStorageKey.CALC_RESULTS, res.data.result)
     } catch (error) {
+        await new Promise(resolve => setTimeout(resolve, 5000))
         throw new Error('failed to calc');
     }
 }

@@ -3,10 +3,12 @@ import {localStorageKey} from '../../../constants/local-storage-key'
 import {StorageType} from '../../../interfaces/storage'
 import TextInput from '../../ui/Form/TextInput'
 import SettingFormUI from '../../ui/Form/SettingFormUI'
+import {botMessageTemplate} from '../../../constants/bot-message'
 
 type SettingFormProps = {
   registering : boolean,
-  setRegistering : any
+  setRegistering : any,
+  setBotMessage : any
 };
 
 const SettingForm = (props: SettingFormProps) => {
@@ -53,6 +55,7 @@ const SettingForm = (props: SettingFormProps) => {
     ];
 
     global.ipcRenderer.sendSync("RegisterStorage", storageData);
+    props.setBotMessage(botMessageTemplate['setting.success'])
   }
 
   return (
