@@ -43,6 +43,26 @@ function storeStorageDatas(data: StorageType[]): any {
         {
             path: localStorageKey.API_IP,
             value: defaultLocalStorageValue.API_IP,
+        },
+        {
+            path: localStorageKey.AI_ENGINE,
+            value: defaultLocalStorageValue.AI_ENGINE,
+        },
+        {
+            path: localStorageKey.SORT_SETTING,
+            value: defaultLocalStorageValue.SORT_SETTING,
+        },
+        {
+            path: localStorageKey.ICON,
+            value: defaultLocalStorageValue.ICON,
+        },
+        {
+            path: localStorageKey.THEME,
+            value: defaultLocalStorageValue.THEME,
+        },
+        {
+            path: localStorageKey.EVALUATE_OPTION,
+            value: defaultLocalStorageValue.EVALUATE_OPTION,
         }
     ]
     data?.map((storageData: StorageType) => {

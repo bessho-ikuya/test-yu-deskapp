@@ -84,13 +84,6 @@ const IndexPage = () => {
     }
   }, [goodActionId]);
 
-  const headers:string[] = [
-    '順位',
-    '推薦項目名',
-    '確度',
-    'アクション',
-  ];
-
   return (
     <Layout title="BrainBoxAICheck" message={botMessage}>
       <div>
@@ -104,8 +97,7 @@ const IndexPage = () => {
         <div className='flex'>
           <div className='w-85 mr-4'></div>
           {!loading && !hasError && !!calcResults && calcResults.length > 0 ? (
-            <CalcResultTable 
-              headers={headers} 
+            <CalcResultTable  
               setBadActionId={setBadActionId} 
               setBadActionUser={setBadActionUser} 
               setGoodActionId={setGoodActionId} 
