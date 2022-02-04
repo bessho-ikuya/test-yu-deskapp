@@ -17,6 +17,12 @@ app.on('ready', async () => {
   const mainWindow = new BrowserWindow(windowConf(screen))
   mainWindow.setMenuBarVisibility(false);
 
+  // ダブルクリックされたファイルのパスを取得
+  let filepath = '';
+  if (process.argv.length >= 3) {
+    filepath = process.argv[2];
+  }
+
   // デフォルト値セット  
   setDefaultStorageDatas()
 
@@ -25,11 +31,13 @@ app.on('ready', async () => {
     .then(() => {
       // 成功シグナル送信
       mainWindow.webContents.send("ExecCalcResult", { status: true })
+      mainWindow.webContents.send("filepath", { status: filepath })
     })
     .catch(err => {
       console.log('err__', err)
       // 失敗シグナル送信
       mainWindow.webContents.send("ExecCalcResult", { status: false })
+      mainWindow.webContents.send("filepath", { status: filepath })
     })
 
   mainWindow.loadURL(appUrl)
