@@ -25,14 +25,6 @@ const IndexPage = () => {
     acceptFirstCalcResult(setError, endLoading)
   }, [])
 
-  // 引数受信
-  useEffect(() => {
-    global.ipcRenderer.addListener('filepath', (_event, args) => {
-      alert(args.status)
-    })
-  }, [])
-
-
   // 再計算
   useEffect(() => {
     if (reCalc) {

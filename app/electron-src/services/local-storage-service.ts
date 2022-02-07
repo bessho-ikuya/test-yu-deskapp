@@ -28,14 +28,17 @@ function storeStorageDatas(data: StorageType[]): any {
 }
 
 /**
+ * 単体保存処理
+ */
+function setStorageData(data: StorageType): any {
+    setStorage(data.path, data.value)
+}
+
+/**
  * デフォルト設定処理
  */
  function setDefaultStorageDatas(): any {
     const data:StorageType[] = [
-        {
-            path: localStorageKey.CSV_PASS,
-            value: defaultLocalStorageValue.CSV_PASS,
-        },
         {
             path: localStorageKey.CSV_TMP_PASS,
             value: defaultLocalStorageValue.CSV_TMP_PASS,
@@ -72,4 +75,4 @@ function storeStorageDatas(data: StorageType[]): any {
     })
 }
 
-export {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas}
+export {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas, setStorageData}

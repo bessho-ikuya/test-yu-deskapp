@@ -6,7 +6,11 @@ import {windowConf, appUrl} from './window-setting'
 // services
 import {execCalc, moveCsvFileToTmp} from './services/calc-service'
 import {sendGoodEvaluation, sendBadEvaluation} from './services/evaluation'
-import {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas} from './services/local-storage-service'
+import {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas, setStorageData} from './services/local-storage-service'
+import {localStorageKey} from './constants/local-storage-key'
+
+// lib
+import {fetchCommandArg} from './lib/command'
 
 // interfaces
 import {StorageType} from './interfaces/storage'
@@ -17,28 +21,32 @@ app.on('ready', async () => {
   const mainWindow = new BrowserWindow(windowConf(screen))
   mainWindow.setMenuBarVisibility(false);
 
-  // ダブルクリックされたファイルのパスを取得
-  let filepath = '';
-  if (process.argv.length >= 3) {
-    filepath = process.argv[2];
-  }
-
   // デフォルト値セット  
   setDefaultStorageDatas()
-
-  // 初回データ計算
-  execCalc()
-    .then(() => {
-      // 成功シグナル送信
-      mainWindow.webContents.send("ExecCalcResult", { status: true })
-      mainWindow.webContents.send("filepath", { status: filepath })
+  
+  // 計算ファイルパスをコマンド引数から取得
+  fetchCommandArg('--csv').then((path:string) => {
+    // 再計算用に、LSに保存しておく。
+    setStorageData({
+      path: localStorageKey.CSV_PASS,
+      value : path
     })
-    .catch(err => {
-      console.log('err__', err)
-      // 失敗シグナル送信
-      mainWindow.webContents.send("ExecCalcResult", { status: false })
-      mainWindow.webContents.send("filepath", { status: filepath })
-    })
+    // 初回データ計算
+    execCalc(path)
+      .then(() => {
+        // 成功シグナル送信
+        mainWindow.webContents.send("ExecCalcResult", { status: true })
+      })
+      .catch(err => {
+        console.log('err__', err)
+        // 失敗シグナル送信
+        mainWindow.webContents.send("ExecCalcResult", { status: false })
+      })
+  }).catch(err => {
+    console.log('err__', err)
+    // 失敗シグナル送信
+    mainWindow.webContents.send("ExecCalcResult", { status: false })
+  })
 
   mainWindow.loadURL(appUrl)
 })
