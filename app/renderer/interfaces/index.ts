@@ -34,6 +34,11 @@ export type CalcRequestType = {
   filtering : string[]
 }
 
+export type SortSettingType = {
+  max_distance : number,
+  display_number : number
+}
+
 export type Error = {
   code: number
   errors: string[]

@@ -3,15 +3,18 @@ import Layout from '../components/Layout'
 import LinkButton from '../components/ui/Button/LinkButton'
 import ActionButton from '../components/ui/Button/ActionButton'
 import CalcResultTable from '../components/ui/Table/CalcResultTable'
-import {CalcResultType, CalcRequestType} from '../interfaces/index'
+import {CalcResultType, CalcRequestType, SortSettingType} from '../interfaces/index'
 import acceptFirstCalcResult from '../utils/accept-calc-result'
 import calcStateHandler from "../redux/actions/calcStateHandler"
 import {localStorageKey} from '../constants/local-storage-key'
 import {botMessageTemplate} from '../constants/bot-message'
 import CloseButton from '../components/ui/Button/CloseButton'
+import Radio from '../components/ui/Form/Radio'
 
 const IndexPage = () => {
   const [calcResults, setCalcResults] = useState<CalcResultType[]>();
+  const [calcSortResults, setCalcSortResults] = useState<CalcResultType[]>();
+  const [displaySortResult, setDisplaySortResult] = useState<boolean>(false);
   const [calcRequest, setCalcRequest] = useState<CalcRequestType>();
   const [badActionId, setBadActionId] = useState<string>("")
   const [goodActionId, setGoodActionId] = useState<string>("")
@@ -47,6 +50,25 @@ const IndexPage = () => {
       updateDisplayCalcResultData()
     }
   }, [loading])
+
+  // 結果のソート
+  useEffect(() => {
+    if (displaySortResult) {
+      // ソート設定取得
+      let pathes: string[] = [
+        localStorageKey.SORT_SETTING,
+      ];
+      let retval = global.ipcRenderer.sendSync("FetchStorage", pathes);
+      let sort: SortSettingType = retval.data[localStorageKey.SORT_SETTING]
+
+      const sortDistanceArray = calcResults.filter(calcResult => {
+        return Number(calcResult.distance) <= sort.max_distance;
+      })
+      const sortDisplayNumberArray = sortDistanceArray.slice(0, sort.display_number)
+
+      setCalcSortResults(sortDisplayNumberArray);
+    }
+  }, [displaySortResult])
 
   // 結果表示データ更新
   function updateDisplayCalcResultData() {
@@ -88,25 +110,40 @@ const IndexPage = () => {
     }
   }, [goodActionId]);
 
+  const DisplaySortRadio = [
+    {
+      value : false,
+      label : "全て表示",
+    },
+    {
+      value : true,
+      label : "一部のみ表示",
+    },
+  ];
+
   return (
     <Layout title="BrainBoxAICheck" message={botMessage}>
       <div>
-        <div className='flex justify-end mb-2'>
-          <ActionButton key="loadbtn" disabled={loading ? true : false} label={loading ? "更新中..." : "更新"} onClick={() => {
-            startLoading()
-            clearError()
-            setReCalc(1)
-          }}/>
+        <div className='flex'>
+          <div className='w-85 mr-4'></div>
+          <div className='w-full flex justify-between mb-2'>
+            <Radio name={"display-sort-result"} imageLabel={false} items={DisplaySortRadio} state={displaySortResult} setState={setDisplaySortResult}/>
+            <ActionButton key="loadbtn" disabled={loading ? true : false} label={loading ? "更新中..." : "更新"} onClick={() => {
+              startLoading()
+              clearError()
+              setReCalc(1)
+            }}/>
+          </div>
         </div>
         <div className='flex'>
           <div className='w-85 mr-4'></div>
-          {!loading && !hasError && !!calcResults && calcResults.length > 0 ? (
+          {!loading && !hasError ? (
             <CalcResultTable  
               setBadActionId={setBadActionId} 
               setBadActionUser={setBadActionUser} 
               setGoodActionId={setGoodActionId} 
               setGoodActionUser={setGoodActionUser} 
-              calcResults={calcResults} 
+              calcResults={displaySortResult ? calcSortResults : calcResults} 
             />
           ) : (
             hasError ? (

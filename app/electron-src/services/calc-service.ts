@@ -27,7 +27,7 @@ async function execCalc(pathFromArg?:string) {
         const request: any = {
             csv: csvData,
             engine: getStorage(localStorageKey.AI_ENGINE),
-            filtering: getStorage(localStorageKey.SORT_SETTING),
+            filtering: getStorage(localStorageKey.FILTER_SETTING),
         }
         const res = await predict(request);
         // 計算結果をローカルストレージに保存

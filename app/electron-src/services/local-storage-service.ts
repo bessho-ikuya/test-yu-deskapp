@@ -52,6 +52,10 @@ function setStorageData(data: StorageType): any {
             value: defaultLocalStorageValue.AI_ENGINE,
         },
         {
+            path: localStorageKey.FILTER_SETTING,
+            value: defaultLocalStorageValue.FILTER_SETTING,
+        },
+        {
             path: localStorageKey.SORT_SETTING,
             value: defaultLocalStorageValue.SORT_SETTING,
         },

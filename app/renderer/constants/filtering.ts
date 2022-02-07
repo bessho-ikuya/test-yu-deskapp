@@ -1,4 +1,4 @@
-export const SortCheckbox = [
+export const FilterCheckbox = [
     {
       value : "11",
       label : "初診",

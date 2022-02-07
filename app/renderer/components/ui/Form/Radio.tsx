@@ -2,7 +2,7 @@ type Props = {
     name: string;
     items: any;
     imageLabel: boolean;
-    state: React.SetStateAction<string>;
+    state: React.SetStateAction<any>;
     setState: any;
 }
 

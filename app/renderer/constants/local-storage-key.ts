@@ -4,6 +4,7 @@ export const localStorageKey = {
     "CALC_RESULTS" : "data.CALC_RESULTS",
     "CALC_REQUEST" : "data.CALC_REQUEST",
     "API_IP" : "env.API_IP",
+    "FILTER_SETTING" : "env.FILTER_SETTING",
     "SORT_SETTING" : "env.SORT_SETTING",
     "AI_ENGINE" : "env.AI_ENGINE",
     "ICON" : "env.ICON",
