@@ -26,6 +26,8 @@ async function execCalc(pathFromArg?:string) {
         // API接続
         const request: any = {
             csv: csvData,
+            phase: 'record',
+            accounting: 'receipt',
             engine: getStorage(localStorageKey.AI_ENGINE),
             filtering: getStorage(localStorageKey.FILTER_SETTING),
         }

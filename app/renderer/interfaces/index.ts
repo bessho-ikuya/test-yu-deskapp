@@ -31,6 +31,8 @@ export type CalcResultType = {
 export type CalcRequestType = {
   csv : string,
   engine : string,
+  phase: string,
+  accounting: string,
   filtering : string[]
 }
 
