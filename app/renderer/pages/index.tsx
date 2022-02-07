@@ -3,7 +3,7 @@ import Layout from '../components/Layout'
 import LinkButton from '../components/ui/Button/LinkButton'
 import ActionButton from '../components/ui/Button/ActionButton'
 import CalcResultTable from '../components/ui/Table/CalcResultTable'
-import {CalcResultType} from '../interfaces/index'
+import {CalcResultType, CalcRequestType} from '../interfaces/index'
 import acceptFirstCalcResult from '../utils/accept-calc-result'
 import calcStateHandler from "../redux/actions/calcStateHandler"
 import {localStorageKey} from '../constants/local-storage-key'
@@ -12,6 +12,7 @@ import CloseButton from '../components/ui/Button/CloseButton'
 
 const IndexPage = () => {
   const [calcResults, setCalcResults] = useState<CalcResultType[]>();
+  const [calcRequest, setCalcRequest] = useState<CalcRequestType>();
   const [badActionId, setBadActionId] = useState<string>("")
   const [goodActionId, setGoodActionId] = useState<string>("")
   const [badActionUser, setBadActionUser] = useState<string[]>([])
@@ -51,10 +52,13 @@ const IndexPage = () => {
   function updateDisplayCalcResultData() {
     let pathes: string[] = [
       localStorageKey.CALC_RESULTS,
+      localStorageKey.CALC_REQUEST,
     ];
     let retval = global.ipcRenderer.sendSync("FetchStorage", pathes);
     let results: CalcResultType[] = retval.data[localStorageKey.CALC_RESULTS]
+    let request: CalcRequestType = retval.data[localStorageKey.CALC_REQUEST]
     setCalcResults(results)
+    setCalcRequest(request)
     setBotMessage(botMessageTemplate['index.default'])
   }
 
@@ -62,7 +66,7 @@ const IndexPage = () => {
   useEffect(() => {
     if (badActionId !== "") {
       let request: any = {
-        engine: 'predict_all',
+        engine: calcRequest.engine,
         receipt_code: badActionId,
         user: badActionUser
       }
@@ -75,7 +79,7 @@ const IndexPage = () => {
   useEffect(() => {
     if (goodActionId !== "") {
       let request: any = {
-        engine: 'predict_all',
+        engine: calcRequest.engine,
         receipt_code: goodActionId,
         user: goodActionUser
       }

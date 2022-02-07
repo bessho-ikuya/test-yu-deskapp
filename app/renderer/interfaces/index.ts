@@ -28,6 +28,12 @@ export type CalcResultType = {
   recept2 : string
 }
 
+export type CalcRequestType = {
+  csv : string,
+  engine : string,
+  filtering : string[]
+}
+
 export type Error = {
   code: number
   errors: string[]

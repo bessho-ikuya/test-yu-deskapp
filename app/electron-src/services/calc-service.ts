@@ -26,12 +26,13 @@ async function execCalc(pathFromArg?:string) {
         // API接続
         const request: any = {
             csv: csvData,
-            engine: 'private_all',
-            filtering: [],
+            engine: getStorage(localStorageKey.AI_ENGINE),
+            filtering: getStorage(localStorageKey.SORT_SETTING),
         }
         const res = await predict(request);
         // 計算結果をローカルストレージに保存
         setStorage(localStorageKey.CALC_RESULTS, res.data.result)
+        setStorage(localStorageKey.CALC_REQUEST, request)
     } catch (error) {
         // 画面が生成されるまで5秒待つ
         await new Promise(resolve => setTimeout(resolve, 5000))

@@ -7,6 +7,8 @@ import Radio from '../../ui/Form/Radio'
 import CheckboxInput from '../../ui/Form/Checkbox'
 import SelectboxInput from '../../ui/Form/Selectbox'
 import {botMessageTemplate} from '../../../constants/bot-message'
+import {AiEngineRadio} from '../../../constants/ai-engine'
+import {SortCheckbox} from '../../../constants/filtering'
 import {themeDatas, themeIcons} from '../../../constants/theme-list'
 
 type SettingFormProps = {
@@ -23,18 +25,7 @@ const SettingForm = (props: SettingFormProps) => {
   const [sort, setSort] = useState<string[]>([]);
   const [icon, setIcon] = useState<string>('');
   const [theme, setTheme] = useState<string>('');
-  const [evaluateOption, setEvaluateOption] = useState<string>('');
-
-  const AiEngineRadio = [
-    {
-      value : "private",
-      label : "プライベート",
-    },
-    {
-      value : "insider",
-      label : "内科",
-    },
-  ];
+  const [evaluateOption, setEvaluateOption] = useState<string>('');  
 
   const EvalRadio = [
     {
@@ -44,21 +35,6 @@ const SettingForm = (props: SettingFormProps) => {
     {
       value : "off",
       label : "off",
-    },
-  ];
-
-  const SortCheckbox = [
-    {
-      value : "medic",
-      label : "医学管理",
-    },
-    {
-      value : "home",
-      label : "在宅",
-    },
-    {
-      value : "throw",
-      label : "投薬",
     },
   ];
 
