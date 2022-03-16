@@ -44,6 +44,10 @@ function setStorageData(data: StorageType): any {
             value: defaultLocalStorageValue.CSV_TMP_PASS,
         },
         {
+            path: localStorageKey.APP_CLOSE_TRIGER_PASS,
+            value: defaultLocalStorageValue.APP_CLOSE_TRIGER_PASS,
+        },
+        {
             path: localStorageKey.API_IP,
             value: defaultLocalStorageValue.API_IP,
         },

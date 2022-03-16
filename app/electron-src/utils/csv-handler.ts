@@ -5,7 +5,7 @@ async function fetchDirCsv(path: string) :Promise<string[]>
 {
   const fileNameList: string[] = [];
   fs.readdirSync(path)
-  .filter((fileName:string) => fs.statSync(`${path}/${fileName}`).isFile() && /.*\.txt$/.test(`${path}/${fileName}`))
+  .filter((fileName:string) => fs.statSync(`${path}/${fileName}`).isFile() && /.*\.csv$/.test(`${path}/${fileName}`))
   .forEach((fileName:string) => fileNameList.push(fileName));
   if (fileNameList.length <= 0) {
     throw new Error('failed to get csv file');

@@ -21,6 +21,7 @@ type SettingFormProps = {
 const SettingForm = (props: SettingFormProps) => {
   const [csvPath, setCsvPath] = useState<string>('');
   const [csvTmpPath, setCsvTmpPath] = useState<string>('');
+  const [appCloseTrigerPass, setAppCloseTrigerPass] = useState<string>('');
   const [apiIp, setApiIp] = useState<string>('');
   const [aiEngine, setAiEngine] = useState<string>('');
   const [filter, setFilter] = useState<string[]>([]);
@@ -51,6 +52,7 @@ const SettingForm = (props: SettingFormProps) => {
     let pathes: string[] = [
       localStorageKey.CSV_PASS,
       localStorageKey.CSV_TMP_PASS,
+      localStorageKey.APP_CLOSE_TRIGER_PASS,
       localStorageKey.API_IP,
       localStorageKey.FILTER_SETTING,
       localStorageKey.SORT_SETTING,
@@ -62,6 +64,7 @@ const SettingForm = (props: SettingFormProps) => {
     var retval = global.ipcRenderer.sendSync("FetchStorage", pathes);
     setCsvPath(retval.data[localStorageKey.CSV_PASS])
     setCsvTmpPath(retval.data[localStorageKey.CSV_TMP_PASS])
+    setAppCloseTrigerPass(retval.data[localStorageKey.APP_CLOSE_TRIGER_PASS])
     setApiIp(retval.data[localStorageKey.API_IP])
     setAiEngine(retval.data[localStorageKey.AI_ENGINE])
     setFilter(retval.data[localStorageKey.FILTER_SETTING])
@@ -103,6 +106,10 @@ const SettingForm = (props: SettingFormProps) => {
         {
           path: localStorageKey.CSV_TMP_PASS,
           value: csvTmpPath
+        },
+        {
+          path: localStorageKey.APP_CLOSE_TRIGER_PASS,
+          value: appCloseTrigerPass
         },
         {
           path: localStorageKey.API_IP,
@@ -211,6 +218,12 @@ const SettingForm = (props: SettingFormProps) => {
             一時保存ファイルパス
             </label>
             <TextInput value={csvTmpPath} onChange={(e) => setCsvTmpPath(e.target.value)} />
+          </div>
+          <div className='mb-1'>
+            <label className="block text-black-400 text-sm mb-1">
+            アプリ自動削除判定ファイルパス
+            </label>
+            <TextInput value={appCloseTrigerPass} onChange={(e) => setAppCloseTrigerPass(e.target.value)} />
           </div>
           <div className='mb-1'>
             <label className="block text-black-400 text-sm mb-1">

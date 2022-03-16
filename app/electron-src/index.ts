@@ -5,6 +5,7 @@ import {windowConf, appUrl} from './window-setting'
 
 // services
 import {execCalc, moveCsvFileToTmp} from './services/calc-service'
+import {autoDownAppPooling} from './services/auto-down-service'
 import {sendGoodEvaluation, sendBadEvaluation} from './services/evaluation'
 import {fetchStorageDatas, storeStorageDatas, setDefaultStorageDatas, setStorageData} from './services/local-storage-service'
 import {localStorageKey} from './constants/local-storage-key'
@@ -47,6 +48,9 @@ app.on('ready', async () => {
     // 失敗シグナル送信
     mainWindow.webContents.send("ExecCalcResult", { status: false })
   })
+
+  // 自動アプリダウン定期実行
+  autoDownAppPooling()
 
   mainWindow.loadURL(appUrl)
 })
