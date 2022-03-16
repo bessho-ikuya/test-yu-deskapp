@@ -1,5 +1,6 @@
 export const localStorageKey = {
     "CSV_PASS" : "env.CSV_PASS",
+    "CSV_PASS_TYPE" : "env.CSV_PASS_TYPE",
     "CSV_TMP_PASS" : "env.CSV_TMP_PASS",
     "APP_CLOSE_TRIGER_PASS" : "env.APP_CLOSE_TRIGER_PASS",
     "CALC_RESULTS" : "data.CALC_RESULTS",

@@ -25,15 +25,26 @@ app.on('ready', async () => {
   // デフォルト値セット  
   setDefaultStorageDatas()
   
-  // 計算ファイルパスをコマンド引数から取得
-  fetchCommandArg('--csv').then((path:string) => {
+  let args:string[] = [
+    '--csv',
+    '--type'
+  ];
+  fetchCommandArgs(args).then((commandArgs:string[]) => {
+    // 計算ファイルパスをコマンド引数から取得
+    let path:string = commandArgs[0]
+    // 計算ファイル種別をコマンド引数から取得
+    let type:string = commandArgs[1]
     // 再計算用に、LSに保存しておく。
     setStorageData({
       path: localStorageKey.CSV_PASS,
       value : path
-    })
+    });
+    setStorageData({
+      path: localStorageKey.CSV_PASS_TYPE,
+      value : path
+    });
     // 初回データ計算
-    execCalc(path)
+    execCalc(path, type)
       .then(() => {
         // 成功シグナル送信
         mainWindow.webContents.send("ExecCalcResult", { status: true })
@@ -137,3 +148,11 @@ ipcMain.on("sendBadEvaluation", (event: IpcMainEvent, request: any) => {
       event.returnValue = { status: false };
     })
 });
+
+async function fetchCommandArgs(targetArgs:string[]) : Promise<string[]> {
+  let args:string[] = []
+  for (let i = 0; i < targetArgs.length; i ++ ) {
+    args[i] = fetchCommandArg(targetArgs[i])
+  }
+  return args
+}

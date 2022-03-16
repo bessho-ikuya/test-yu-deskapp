@@ -6,7 +6,7 @@ import predict from '../api/action/predict'
 /**
  * 計算実行
  */
-async function execCalc(pathFromArg?:string) {
+async function execCalc(pathFromArg?:string, typeFromArg?:string) {
     try {
         // 初回計算時は起動コマンド引数のパスを利用し、再計算時はLSを見る。
         let csvPath : string = ""
@@ -18,6 +18,15 @@ async function execCalc(pathFromArg?:string) {
         } else {
             csvPath = pathFromArg
         }
+        let csvType : string = ""
+        if (!typeFromArg) {
+            if (!hasStorage(localStorageKey.CSV_PASS_TYPE)) {
+                throw new Error('no csv path type set');
+            }
+            csvType = getStorage(localStorageKey.CSV_PASS_TYPE)
+        } else {
+            csvType = typeFromArg
+        }
         // ローカルのcsvを読む
         const fileNames = await fetchDirCsv(csvPath);
         const targetFileName = fileNames[0]
@@ -26,11 +35,12 @@ async function execCalc(pathFromArg?:string) {
         // API接続
         const request: any = {
             csv: csvData,
-            phase: 'record',
+            phase: csvType,
             accounting: 'receipt',
             engine: getStorage(localStorageKey.AI_ENGINE),
             filtering: getStorage(localStorageKey.FILTER_SETTING),
         }
+        console.log('_request', request);
         const res = await predict(request);
         // 計算結果をローカルストレージに保存
         setStorage(localStorageKey.CALC_RESULTS, res.data.result)
