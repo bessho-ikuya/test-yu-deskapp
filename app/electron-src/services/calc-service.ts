@@ -40,7 +40,6 @@ async function execCalc(pathFromArg?:string, typeFromArg?:string) {
             engine: getStorage(localStorageKey.AI_ENGINE),
             filtering: getStorage(localStorageKey.FILTER_SETTING),
         }
-        console.log('_request', request);
         const res = await predict(request);
         // 計算結果をローカルストレージに保存
         setStorage(localStorageKey.CALC_RESULTS, res.data.result)

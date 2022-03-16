@@ -41,7 +41,7 @@ app.on('ready', async () => {
     });
     setStorageData({
       path: localStorageKey.CSV_PASS_TYPE,
-      value : path
+      value : type
     });
     // 初回データ計算
     execCalc(path, type)

@@ -61,12 +61,14 @@ const IndexPage = () => {
       let retval = global.ipcRenderer.sendSync("FetchStorage", pathes);
       let sort: SortSettingType = retval.data[localStorageKey.SORT_SETTING]
 
-      const sortDistanceArray = calcResults.filter(calcResult => {
-        return Number(calcResult.distance) <= sort.max_distance;
-      })
-      const sortDisplayNumberArray = sortDistanceArray.slice(0, sort.display_number)
-
-      setCalcSortResults(sortDisplayNumberArray);
+      if (calcResults !== undefined) {
+        const sortDistanceArray = calcResults.filter(calcResult => {
+          return Number(calcResult.distance) <= sort.max_distance;
+        })
+        const sortDisplayNumberArray = sortDistanceArray.slice(0, sort.display_number)
+  
+        setCalcSortResults(sortDisplayNumberArray);
+      }
     }
   }, [displaySortResult])
 
