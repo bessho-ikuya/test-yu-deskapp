@@ -5,11 +5,11 @@ import {moveCsvFileToTmp} from './calc-service'
 import {app} from 'electron'
 
 async function autoDownAppPooling() {
-    const intervalMs = 5000;
+    const intervalMs = 2000;
     const sleep = (milliSeconds: any) => new Promise(resolve => {
         setTimeout(() => resolve("sleep..."), milliSeconds);
     });
-
+    
     const wait = async () => {
         while (true) {
             await sleep(intervalMs);

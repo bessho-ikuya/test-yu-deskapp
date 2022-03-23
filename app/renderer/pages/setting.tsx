@@ -6,7 +6,7 @@ import acceptCalcResult from '../utils/accept-calc-result'
 import calcStateHandler from "../redux/actions/calcStateHandler"
 import LinkButton from '../components/ui/Button/LinkButton'
 import ActionButton from '../components/ui/Button/ActionButton'
-import CloseButton from '../components/ui/Button/CloseButton'
+// import CloseButton from '../components/ui/Button/CloseButton'
 import {botMessageTemplate} from '../constants/bot-message'
 
 const SettingPage = () => {
@@ -34,7 +34,7 @@ const SettingPage = () => {
           <LinkButton label="戻る" href="/" />
           <div className='flex justify-end'>
             <ActionButton label={registering ? "保存中.." : "保存"} exClassName={"mr-4"} disabled={registering ? true : false} onClick={() => onSubmit()} />
-            <CloseButton label="閉じる" />
+            {/* <CloseButton label="閉じる" /> */}
           </div>
         </div>
       </div>

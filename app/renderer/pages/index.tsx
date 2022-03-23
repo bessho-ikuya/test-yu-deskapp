@@ -8,7 +8,7 @@ import acceptFirstCalcResult from '../utils/accept-calc-result'
 import calcStateHandler from "../redux/actions/calcStateHandler"
 import {localStorageKey} from '../constants/local-storage-key'
 import {botMessageTemplate} from '../constants/bot-message'
-import CloseButton from '../components/ui/Button/CloseButton'
+// import CloseButton from '../components/ui/Button/CloseButton'
 import Radio from '../components/ui/Form/Radio'
 
 const IndexPage = () => {
@@ -158,7 +158,7 @@ const IndexPage = () => {
       </div>
       <div className='flex justify-between'>
         <LinkButton label="設定" href="/setting" />
-        <CloseButton label="閉じる" />
+        {/* <CloseButton label="閉じる" /> */}
       </div>
     </Layout>
   )

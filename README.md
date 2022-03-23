@@ -8,7 +8,9 @@ or
 npm run dist -- -mwl  
 ```
 
-# windows 起動コマンド
+# windows 起動コマンド  
+--type : “record” | “accounting“ | “receipt“  
+--csv : csvディレクトリ  
 ```
-start ~.exe --csv C:\.csv
+start ~.exe --csv C:\...\ --type record
 ```
