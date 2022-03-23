@@ -22,11 +22,11 @@ const IndexPage = () => {
   const [goodActionUser, setGoodActionUser] = useState<string[]>([])
   const [reCalc, setReCalc] = useState<number>(0)
   const [botMessage, setBotMessage] = useState<string>(botMessageTemplate['index.default'])
-  const { loading, hasError, startLoading, endLoading, setError, clearError } = calcStateHandler();
+  const { loading, hasError, errorMessage, startLoading, endLoading, setError, clearError, setErrorMessage } = calcStateHandler();
 
   // 初回計算結果受信
   useEffect(() => {
-    acceptFirstCalcResult(setError, endLoading)
+    acceptFirstCalcResult(setError, endLoading, setErrorMessage)
   }, [])
 
   // 再計算
@@ -37,6 +37,9 @@ const IndexPage = () => {
         setError()
         endLoading()
         setReCalc(0)
+        if (retval.message != '') {
+          setErrorMessage(retval.message);
+        }
       } else {
         endLoading()
         setReCalc(0)
@@ -149,7 +152,7 @@ const IndexPage = () => {
             />
           ) : (
             hasError ? (
-              <p className='text-red-400'>更新に失敗しました。</p>
+              <p className='text-red-400'>{ errorMessage }</p>
             ) : (
               <h1>Loading...</h1>
             )

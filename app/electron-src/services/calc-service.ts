@@ -44,10 +44,10 @@ async function execCalc(pathFromArg?:string, typeFromArg?:string) {
         // 計算結果をローカルストレージに保存
         setStorage(localStorageKey.CALC_RESULTS, res.data.result)
         setStorage(localStorageKey.CALC_REQUEST, request)
-    } catch (error) {
+    } catch (error:any) {
         // 画面が生成されるまで5秒待つ
         await new Promise(resolve => setTimeout(resolve, 5000))
-        throw new Error('failed to calc');
+        throw new Error(error.message);
     }
 }
 

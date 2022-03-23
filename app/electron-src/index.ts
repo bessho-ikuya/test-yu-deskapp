@@ -47,17 +47,17 @@ app.on('ready', async () => {
     execCalc(path, type)
       .then(() => {
         // 成功シグナル送信
-        mainWindow.webContents.send("ExecCalcResult", { status: true })
+        mainWindow.webContents.send("ExecCalcResult", { status: true, message: '' })
       })
       .catch(err => {
         console.log('err__', err)
         // 失敗シグナル送信
-        mainWindow.webContents.send("ExecCalcResult", { status: false })
+        mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
       })
   }).catch(err => {
     console.log('err__', err)
     // 失敗シグナル送信
-    mainWindow.webContents.send("ExecCalcResult", { status: false })
+    mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
   })
 
   // 自動アプリダウン定期実行
@@ -109,12 +109,12 @@ ipcMain.on("ReExecCalc", (event: IpcMainEvent) => {
   execCalc()
     .then(() => {
       // 成功シグナル送信
-      event.returnValue = { status: true };
+      event.returnValue = { status: true, message: '' };
     })
     .catch(err => {
       console.log('err__', err)
       // 失敗シグナル送信
-      event.returnValue = { status: false };
+      event.returnValue = { status: false, message: err.message };
     })
 });
 
@@ -124,12 +124,12 @@ ipcMain.on("sendGoodEvaluation", (event: IpcMainEvent, request: any) => {
   sendGoodEvaluation(request)
     .then(() => {
       // 成功シグナル送信
-      event.returnValue = { status: true };
+      event.returnValue = { status: true, message: '' };
     })
     .catch(err => {
       console.log('err__', err)
       // 失敗シグナル送信
-      event.returnValue = { status: false };
+      event.returnValue = { status: false, message: err.message };
     })
 });
 
@@ -140,12 +140,12 @@ ipcMain.on("sendBadEvaluation", (event: IpcMainEvent, request: any) => {
   sendBadEvaluation(request)
     .then(() => {
       // 成功シグナル送信
-      event.returnValue = { status: true };
+      event.returnValue = { status: true, message: '' };
     })
     .catch(err => {
       console.log('err__', err)
       // 失敗シグナル送信
-      event.returnValue = { status: false };
+      event.returnValue = { status: false, message: err.message };
     })
 });
 

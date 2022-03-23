@@ -10,13 +10,13 @@ import ActionButton from '../components/ui/Button/ActionButton'
 import {botMessageTemplate} from '../constants/bot-message'
 
 const SettingPage = () => {
-  const { endLoading, setError } = calcStateHandler();
+  const { endLoading, setError, setErrorMessage } = calcStateHandler();
   const [registering, setRegistering] = useState<boolean>(false);
   const [botMessage, setBotMessage] = useState<string>(botMessageTemplate['setting.default'])
 
   // 計算結果受信
   useEffect(() => {
-    acceptCalcResult(setError, endLoading)
+    acceptCalcResult(setError, endLoading, setErrorMessage)
   }, [])
 
   function onSubmit() {

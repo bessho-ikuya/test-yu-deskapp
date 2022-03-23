@@ -4,6 +4,7 @@ import {CalcState} from '../interfaces/index'
 const initialState: CalcState = { 
     loading: true,
     error: false,
+    errorMessage: "",
 };
 
 export const CalcStateSlice = createSlice({
@@ -16,26 +17,35 @@ export const CalcStateSlice = createSlice({
     setError(state) {
         return {
             loading: state.loading,
+            errorMessage: state.errorMessage,
+            error: true
+        };
+    },
+    setErrorMessage(state, action: any) {
+        return {
+            loading: state.loading,
+            errorMessage: action.payload.errorMessage,
             error: true
         };
     },
     clearError(state) {
-        console.log('clearError')
         return {
             loading: state.loading,
+            errorMessage: "",
             error: false
         };
     },
     endLoading(state) {
         return {
             error: state.error,
+            errorMessage: state.errorMessage,
             loading: false
         };
     },
     startLoading(state) {
-        console.log('startload')
         return {
             error: state.error,
+            errorMessage: state.errorMessage,
             loading: true
         };
     },
