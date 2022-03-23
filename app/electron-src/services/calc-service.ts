@@ -12,6 +12,7 @@ async function execCalc(pathFromArg?:string, typeFromArg?:string) {
         let csvPath : string = ""
         if (!pathFromArg) {
             if (!hasStorage(localStorageKey.CSV_PASS)) {
+                await new Promise(resolve => setTimeout(resolve, 5000))
                 throw new Error('no csv path set');
             }
             csvPath = getStorage(localStorageKey.CSV_PASS)
@@ -21,6 +22,7 @@ async function execCalc(pathFromArg?:string, typeFromArg?:string) {
         let csvType : string = ""
         if (!typeFromArg) {
             if (!hasStorage(localStorageKey.CSV_PASS_TYPE)) {
+                await new Promise(resolve => setTimeout(resolve, 5000))
                 throw new Error('no csv path type set');
             }
             csvType = getStorage(localStorageKey.CSV_PASS_TYPE)
