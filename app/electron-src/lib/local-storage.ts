@@ -24,4 +24,11 @@ function setStorage(path:string, data:any) {
     store.set(path, data)
 }
 
-export {setStorage, hasStorage, getStorage}
+/**
+ * ローカルストレージを初期化
+ */
+ function clearStorage() {
+    store.clear()
+}
+
+export {setStorage, hasStorage, getStorage, clearStorage}

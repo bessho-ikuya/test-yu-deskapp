@@ -178,7 +178,6 @@ const SettingForm = (props: SettingFormProps) => {
 
   return (
     <div className='w-full max-h-setting-cus bg-white overflow-auto p-y-3 mb-2'>
-      {/* <div className='w-full h-full p-y-3 mb-2'> */}
         <SettingFormUI label='絞り込み'>
           <div>
             <CheckboxInput name={"filter"} items={FilterCheckbox} state={filter} setState={setFilter}/>
@@ -210,7 +209,7 @@ const SettingForm = (props: SettingFormProps) => {
             <Radio name={"icon"} imageLabel={true} items={themeIcons[theme]} state={icon} setState={setIcon}/>
           )}
         </SettingFormUI>
-        <SettingFormUI label='システム設定'>
+        {/* <SettingFormUI label='システム設定'>
           <div className='mb-1'>
             <label className="block text-black-400 text-sm mb-1">
             csvパス
@@ -235,8 +234,7 @@ const SettingForm = (props: SettingFormProps) => {
             </label>
             <TextInput value={apiIp} onChange={(e) => setApiIp(e.target.value)} />
           </div>
-        </SettingFormUI>
-      {/* </div> */}
+        </SettingFormUI> */}
     </div>
   );
 }

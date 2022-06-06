@@ -49,50 +49,50 @@ const themeDatas = [
 const themeIcons = {
     "THEME1" : [
         {
-            value : "001",
-            label : iconList["001"],
+            value : "1",
+            label : iconList["1"],
         }
     ],
     "THEME2" : [
         {
-            value : "002",
-            label : iconList["002"],
+            value : "2",
+            label : iconList["2"],
         }
     ],
     "THEME3" : [
         {
-            value : "003",
-            label : iconList["003"],
+            value : "3",
+            label : iconList["3"],
         }
     ],
     "THEME4" : [
         {
-            value : "004",
-            label : iconList["004"],
+            value : "4",
+            label : iconList["4"],
         }
     ],
     "THEME5" : [
         {
-            value : "005",
-            label : iconList["005"],
+            value : "5",
+            label : iconList["5"],
         }
     ],
     "THEME6" : [
         {
-            value : "006",
-            label : iconList["006"],
+            value : "6",
+            label : iconList["6"],
         }
     ],
     "THEME7" : [
         {
-            value : "007",
-            label : iconList["007"],
+            value : "7",
+            label : iconList["7"],
         }
     ],
     "THEME8" : [
         {
-            value : "008",
-            label : iconList["008"],
+            value : "8",
+            label : iconList["8"],
         }
     ]
 }

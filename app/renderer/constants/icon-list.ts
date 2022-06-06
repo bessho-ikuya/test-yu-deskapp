@@ -8,14 +8,14 @@ import {icon_007} from '../assets/images/icons/icon_007'
 import {icon_008} from '../assets/images/icons/icon_008'
 
 const iconList = {
-    "001" : icon_001,
-    "002" : icon_002,
-    "003" : icon_003,
-    "004" : icon_004,
-    "005" : icon_005,
-    "006" : icon_006,
-    "007" : icon_007,
-    "008" : icon_008,
+    "1" : icon_001,
+    "2" : icon_002,
+    "3" : icon_003,
+    "4" : icon_004,
+    "5" : icon_005,
+    "6" : icon_006,
+    "7" : icon_007,
+    "8" : icon_008,
 }
 
 export {iconList}
