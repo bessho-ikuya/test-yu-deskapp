@@ -70,9 +70,21 @@ const CalcResultTable = ({
                 </tr>
                 {calcResults?.map((calcResult: CalcResultType, iskey:number)=> (
                     <tr key={iskey + `__row`}>
-                        <td className="border text-left px-2 py-2 text-sm">{iskey+1}</td>
+                        <td className="border px-2 py-2 text-sm" style={{width: '3rem'}}>
+                            <div className=' flex justify-content-center'>
+                                <span className="text-right px-2 py-2 text-sm" style={{width: '2rem'}}>
+                                {iskey+1}
+                                </span>
+                            </div>
+                        </td>
                         <td className="border w-100 text-left px-2 py-2 text-sm">{calcResult.receipt_code}</td>
-                        <td className="border text-left px-2 py-2 text-sm">{calcResult.distance}</td>
+                        <td className="border px-2 py-2">
+                            <div className=' flex justify-content-center'>
+                                <span className="text-right px-2 py-2 text-sm" style={{width: '4rem'}}>
+                                    {Math.floor((Number(calcResult.distance)) * 100) / 100}
+                                </span>
+                            </div>
+                        </td>
                         {evaluateOption !== "off" && (
                             <td className="border text-left px-2 py-2 text-sm">
                                 {checkedBadReceiptCodes.indexOf(calcResult.receipt_code) === -1 && checkedGoodReceiptCodes.indexOf(calcResult.receipt_code) === -1 && (

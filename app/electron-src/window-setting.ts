@@ -14,7 +14,7 @@ const windowConf = (screen:any) => {
         width: 1000,
         height: 560,
         x: width - 1000,
-        y: height - 560,
+        y: height - 620,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: false,

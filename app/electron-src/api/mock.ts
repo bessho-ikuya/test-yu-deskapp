@@ -17,7 +17,7 @@ async function mock(requestData: any, error: boolean) {
                 },
                 {
                     receipt_code : "傷病aa",
-                    distance : '0.123',
+                    distance : '0.123122133322223',
                     user : ['string'],
                     recept1 : 'string',
                     recept2 : 'string'
