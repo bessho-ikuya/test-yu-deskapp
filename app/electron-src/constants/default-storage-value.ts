@@ -1,12 +1,13 @@
 import { app } from 'electron'
 const propertiesReader = require('properties-reader');
+const log = require('electron-log');
 
 // アプリディレクトリ取得
 const exePath = app.getAppPath();
 // iniファイル読み込み
 const properties = propertiesReader(exePath + '/setup.ini');
 
-console.log('path',exePath);
+log.info('ini file path, ',exePath);
 
 const splitComma = (word: string) => {
     return word.split(',');
