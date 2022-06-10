@@ -1,12 +1,21 @@
-import { app } from 'electron'
+// import { app } from 'electron'
 const propertiesReader = require('properties-reader');
 const log = require('electron-log');
 
+const path = require('path')
+import { app } from 'electron'
+
+let rootDir = app.getAppPath()
+let last = path.basename(rootDir)
+if (last == 'app.asar') {
+    rootDir = path.dirname(app.getPath('exe'))
+}
+log.info('ini file rootDir, ',rootDir);
+
 // アプリディレクトリ取得
-const exePath = app.getAppPath();
-log.info('ini file path, ',exePath);
+// log.info('ini file path, ',exePath);
 // iniファイル読み込み
-const properties = propertiesReader(exePath + '/setup.ini');
+const properties = propertiesReader(rootDir + '/setup.ini');
 
 
 const splitComma = (word: string) => {
