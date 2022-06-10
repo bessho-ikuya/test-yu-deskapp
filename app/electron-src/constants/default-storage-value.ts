@@ -4,10 +4,10 @@ const log = require('electron-log');
 
 // アプリディレクトリ取得
 const exePath = app.getAppPath();
+log.info('ini file path, ',exePath);
 // iniファイル読み込み
 const properties = propertiesReader(exePath + '/setup.ini');
 
-log.info('ini file path, ',exePath);
 
 const splitComma = (word: string) => {
     return word.split(',');

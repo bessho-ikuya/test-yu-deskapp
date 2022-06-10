@@ -36,3 +36,9 @@ npm run dist -- -w
 ```
 start ~.exe --csv C:\...\ --type record
 ```
+
+# ログ
+
+Windows	%USERPROFILE%\AppData\Roaming{app name}\logs{process type}.log  
+macOS	~/Library/Logs/{app name}/{process type}.log  
+Linux	~/.config/{app name}/logs/{process type}.log  
