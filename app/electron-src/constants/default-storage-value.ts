@@ -1,23 +1,18 @@
-// import { app } from 'electron'
-const propertiesReader = require('properties-reader');
-const log = require('electron-log');
-
-const path = require('path')
 import { app } from 'electron'
+const propertiesReader = require('properties-reader');
+const path = require('path')
 
+// アプリディレクトリ取得
 let rootDir = app.getAppPath()
 let last = path.basename(rootDir)
 if (last == 'app.asar') {
     rootDir = path.dirname(app.getPath('exe'))
 }
-log.info('ini file rootDir, ',rootDir);
 
-// アプリディレクトリ取得
-// log.info('ini file path, ',exePath);
 // iniファイル読み込み
 const properties = propertiesReader(rootDir + '/setup.ini');
 
-
+// コンマを配列に変換
 const splitComma = (word: string) => {
     return word.split(',');
 }
