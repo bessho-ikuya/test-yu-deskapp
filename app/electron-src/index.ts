@@ -51,7 +51,7 @@ app.on('ready', async () => {
         mainWindow.webContents.send("ExecCalcResult", { status: true, message: '' })
       })
       .catch(err => {
-        log.info('api error, ', err)
+        log.info('api error, ', err.response)
         // 失敗シグナル送信
         mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
       })
@@ -113,7 +113,7 @@ ipcMain.on("ReExecCalc", (event: IpcMainEvent) => {
       event.returnValue = { status: true, message: '' };
     })
     .catch(err => {
-      log.info('api error, ',err)
+      log.info('api error, ',err.response)
       // 失敗シグナル送信
       event.returnValue = { status: false, message: err.message };
     })
