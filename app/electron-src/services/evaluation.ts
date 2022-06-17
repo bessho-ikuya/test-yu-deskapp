@@ -6,7 +6,7 @@ import bad from '../api/action/bad'
  */
 async function sendGoodEvaluation(request: any) {
     // API接続
-    const res = await good(request);
+    await good(request);
 }
 
 /**
@@ -14,7 +14,7 @@ async function sendGoodEvaluation(request: any) {
  */
  async function sendBadEvaluation(request: any) {
     // API接続
-    const res = await bad(request);
+    await bad(request);
 }
 
 export {sendGoodEvaluation, sendBadEvaluation}
