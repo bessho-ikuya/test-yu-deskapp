@@ -6,7 +6,7 @@
   "name": "0.1.3",
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
-    "dev": "npm run build-electron && electron . --csv /Users/ikuya/Documents/web_projects/yuyama --type record",
+    "dev": "npm run build-electron && electron . --csv C:\Users\ikuya_bessyo\Documents --type record",
     "build-renderer": "next build renderer && next export renderer",
     "build-electron": "tsc -p electron-src",
     "build": "npm run build-renderer && npm run build-electron",
