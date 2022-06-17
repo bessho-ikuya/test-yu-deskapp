@@ -97,7 +97,6 @@ const SettingForm = (props: SettingFormProps) => {
 
   // ローカルストレージに値登録
   async function handleSettingRegister() {
-    // console.log(sort)
     let storageData: StorageType[] = [
         {
             path: localStorageKey.CSV_PASS,

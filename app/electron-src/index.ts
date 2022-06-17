@@ -51,12 +51,12 @@ app.on('ready', async () => {
         mainWindow.webContents.send("ExecCalcResult", { status: true, message: '' })
       })
       .catch(err => {
-        console.log('err__', err)
+        log.info('api error, ',err)
         // 失敗シグナル送信
         mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
       })
   }).catch(err => {
-    log.info('api error, ',err)
+    log.info('front error, ',err)
     // 失敗シグナル送信
     mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
   })
@@ -75,7 +75,7 @@ app.on('window-all-closed', () => {
       app.quit()
     })
     .catch(err => {
-      console.log('err__', err)
+      log.info('front error, ',err)
       app.quit()
     })
 })
@@ -100,7 +100,7 @@ ipcMain.on("CloseApp", () => {
       app.quit()
     })
     .catch(err => {
-      console.log('err__', err)
+      log.info('front error, ',err)
       app.quit()
     })
 });
@@ -113,7 +113,7 @@ ipcMain.on("ReExecCalc", (event: IpcMainEvent) => {
       event.returnValue = { status: true, message: '' };
     })
     .catch(err => {
-      console.log('err__', err)
+      log.info('api error, ',err)
       // 失敗シグナル送信
       event.returnValue = { status: false, message: err.message };
     })
@@ -121,14 +121,13 @@ ipcMain.on("ReExecCalc", (event: IpcMainEvent) => {
 
 // Good評価
 ipcMain.on("sendGoodEvaluation", (event: IpcMainEvent, request: any) => {
-  console.log('sendGoodEvaluation', request)
   sendGoodEvaluation(request)
     .then(() => {
       // 成功シグナル送信
       event.returnValue = { status: true, message: '' };
     })
     .catch(err => {
-      console.log('err__', err)
+      log.info('api error, ',err)
       // 失敗シグナル送信
       event.returnValue = { status: false, message: err.message };
     })
@@ -136,15 +135,13 @@ ipcMain.on("sendGoodEvaluation", (event: IpcMainEvent, request: any) => {
 
 // Bad評価
 ipcMain.on("sendBadEvaluation", (event: IpcMainEvent, request: any) => {
-  console.log('sendBadEvaluation', request)
-
   sendBadEvaluation(request)
     .then(() => {
       // 成功シグナル送信
       event.returnValue = { status: true, message: '' };
     })
     .catch(err => {
-      console.log('err__', err)
+      log.info('front error, ',err)
       // 失敗シグナル送信
       event.returnValue = { status: false, message: err.message };
     })

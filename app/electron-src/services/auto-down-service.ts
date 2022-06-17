@@ -3,6 +3,7 @@ import {hasStorage, getStorage} from '../lib/local-storage'
 import {localStorageKey} from '../constants/local-storage-key'
 import {moveCsvFileToTmp} from './calc-service'
 import {app} from 'electron'
+const log = require('electron-log')
 
 async function autoDownAppPooling() {
     const intervalMs = 2000;
@@ -42,7 +43,7 @@ async function requestAppDown() {
                 app.quit()
             })
             .catch(err => {
-                console.log('err__', err)
+                log.info('front error, ',err)
                 app.quit()
             })
         }
