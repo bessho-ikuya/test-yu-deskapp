@@ -51,12 +51,12 @@ app.on('ready', async () => {
         mainWindow.webContents.send("ExecCalcResult", { status: true, message: '' })
       })
       .catch(err => {
-        log.info('api error, ',err.body)
+        log.info('api error, ', err)
         // 失敗シグナル送信
         mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
       })
   }).catch(err => {
-    log.info('front error, ',err.body)
+    log.info('front error, ',err)
     // 失敗シグナル送信
     mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
   })
