@@ -2,6 +2,7 @@ import {hasStorage, getStorage, setStorage} from '../lib/local-storage'
 import {fetchDirCsv, readCsv, writeCsv, unlinkCsv} from '../utils/csv-handler'
 import {localStorageKey} from '../constants/local-storage-key'
 import predict from '../api/action/predict'
+const log = require('electron-log')
 
 /**
  * 計算実行
@@ -49,7 +50,8 @@ async function execCalc(pathFromArg?:string, typeFromArg?:string) {
     } catch (error:any) {
         // 画面が生成されるまで5秒待つ
         await new Promise(resolve => setTimeout(resolve, 5000))
-        throw new Error(error.response);
+        log.info('api error, ', error.response)
+        throw new Error(error.message);
     }
 }
 
