@@ -2,6 +2,7 @@
 import { BrowserWindow, app, ipcMain, IpcMainEvent, screen} from 'electron'
 import prepareNext from 'electron-next'
 import {windowConf, appUrl} from './window-setting'
+const log = require('electron-log')
 
 // services
 import {execCalc, moveCsvFileToTmp} from './services/calc-service'
@@ -55,7 +56,7 @@ app.on('ready', async () => {
         mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
       })
   }).catch(err => {
-    console.log('err__', err)
+    log.info('api error, ',err)
     // 失敗シグナル送信
     mainWindow.webContents.send("ExecCalcResult", { status: false, message: err.message })
   })
