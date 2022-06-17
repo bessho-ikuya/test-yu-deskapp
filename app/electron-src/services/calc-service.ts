@@ -49,7 +49,7 @@ async function execCalc(pathFromArg?:string, typeFromArg?:string) {
     } catch (error:any) {
         // 画面が生成されるまで5秒待つ
         await new Promise(resolve => setTimeout(resolve, 5000))
-        throw new Error(error.message);
+        throw new Error(error.response);
     }
 }
 
