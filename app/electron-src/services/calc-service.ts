@@ -50,7 +50,7 @@ async function execCalc(pathFromArg?:string, typeFromArg?:string) {
     } catch (error:any) {
         // 画面が生成されるまで5秒待つ
         await new Promise(resolve => setTimeout(resolve, 5000))
-        log.info('api error, ', error.response.data)
+        log.info('api error, ', error.response)
         throw new Error(error.message);
     }
 }
