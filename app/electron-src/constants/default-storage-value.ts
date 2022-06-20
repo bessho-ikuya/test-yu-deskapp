@@ -15,7 +15,7 @@ const properties = propertiesReader(rootDir + '/setup.ini');
 // コンマを配列に変換
 const splitComma = (word: string) => {
     if (word == "") {
-        return "[]";
+        return [];
     }
     return word.split(',');
 }
