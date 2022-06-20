@@ -2,8 +2,8 @@
   "private": true,
   "main": "main/index.js",
   "productName": "BrainBoxAICheck",
-  "version": "0.1.4",
-  "name": "0.1.4",
+  "version": "0.1.5",
+  "name": "0.1.5",
   "scripts": {
     "clean": "rimraf dist main renderer/out renderer/.next",
     "dev": "npm run build-electron && electron . --csv /Users/ikuya/Documents/web_projects/yuyama --type record",
